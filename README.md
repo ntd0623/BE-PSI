@@ -16,17 +16,17 @@
 
 ## 📁 Cấu trúc thư mục
 
-├── src/
-│ ├── config/ # Cấu hình DB & view engine
-│ ├── controllers/ # Logic xử lý các API
-│ ├── models/ # Sequelize models
-│ ├── route/ # Định tuyến API
-│ ├── services/ # Business logic
-│ └── server.js # Điểm khởi động server
-├── .env # Biến môi trường (KHÔNG push lên Git)
-├── .gitignore
-├── package.json
-└── README.md
+- ├── src/
+- │ ├── config/ # Cấu hình DB & view engine
+- │ ├── controllers/ # Logic xử lý các API
+- │ ├── models/ # Sequelize models
+- │ ├── route/ # Định tuyến API
+- │ ├── services/ # Business logic
+- │ └── server.js # Điểm khởi động server
+- ├── .env # Biến môi trường (KHÔNG push lên Git)
+- ├── .gitignore
+- ├── package.json
+- └── README.md
 
 ---
 
