@@ -1,39 +1,40 @@
-const { Sequelize } = require("sequelize");
-require('dotenv').config();
+import { Sequelize } from "sequelize";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 const sequelize = new Sequelize(
   process.env.DB_DATABASE_NAME,
   process.env.DB_USERNAME,
   process.env.DB_PASSWORD,
-
   {
     host: process.env.DB_HOST,
     port: process.env.DB_PORT,
     dialect: process.env.DB_DIALECT,
     logging: false,
     query: {
-      "raw": true
+      raw: true,
     },
     timezone: "+07:00",
     dialectOptions: {
-      charset: 'utf8mb4',
-      // Đôi khi thêm đây để ép chuẩn mã hóa
+      charset: "utf8mb4",
       supportBigNumbers: true,
-      bigNumberStrings: true
+      bigNumberStrings: true,
     },
     define: {
-      charset: 'utf8mb4',
-      collate: 'utf8mb4_unicode_ci',
+      charset: "utf8mb4",
+      collate: "utf8mb4_unicode_ci",
     },
+  }
+);
 
-  });
-
-let connectDB = async () => {
+const connectDB = async () => {
   try {
     await sequelize.authenticate();
-    console.log("Connection has been established successfully.");
+    console.log("✅ Connection has been established successfully.");
   } catch (error) {
-    console.error("Unable to connect to the database:", error);
+    console.error("❌ Unable to connect to the database:", error);
   }
 };
-module.exports = connectDB;
+
+export default connectDB;

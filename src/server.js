@@ -1,10 +1,11 @@
 import express from "express";
 import bodyParser from "body-parser";
-import viewEngine from "./config/viewEngine";
-import initWebRoutes from "./routes/web";
-import connectDB from "./config/connectDBNode";
+import viewEngine from "./config/viewEngine.js";
+import initWebRoutes from "./routes/web.js";
+import connectDB from "./config/connectDBNode.js";
 import cors from "cors";
-require("dotenv").config();
+import dotenv from "dotenv";
+dotenv.config();
 let app = express();
 
 // app.use(cors({ credentials: true, origin: true }));
