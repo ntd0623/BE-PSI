@@ -1,8 +1,9 @@
-"use strict";
+'use strict';
+
 /** @type {import('sequelize-cli').Migration} */
-export default {
+module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable("users", {
+    await queryInterface.createTable('users', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -40,7 +41,7 @@ export default {
         type: Sequelize.DECIMAL(3, 2),
       },
       image: {
-        type: Sequelize.BLOB("long"),
+        type: Sequelize.BLOB('long'),
       },
       createdAt: {
         allowNull: false,
@@ -52,7 +53,8 @@ export default {
       },
     });
   },
+
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable("users");
+    await queryInterface.dropTable('users');
   },
 };

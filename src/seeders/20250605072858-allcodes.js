@@ -1,6 +1,6 @@
 'use strict';
 
-export default {
+module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.bulkInsert('allcodes', [
       // Status codes (dùng cho status_code trong nhiều bảng)

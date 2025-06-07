@@ -1,8 +1,9 @@
-"use strict";
+'use strict';
+
 /** @type {import('sequelize-cli').Migration} */
-export default {
+module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable("reports", {
+    await queryInterface.createTable('reports', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -16,7 +17,7 @@ export default {
         type: Sequelize.STRING,
       },
       description: {
-        type: Sequelize.TEXT("long"),
+        type: Sequelize.TEXT('long'),
       },
       reportType: {
         type: Sequelize.STRING,
@@ -38,7 +39,8 @@ export default {
       },
     });
   },
+
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable("internship_task");
+    await queryInterface.dropTable('reports'); // sửa đúng tên bảng
   },
 };

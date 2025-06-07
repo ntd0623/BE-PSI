@@ -1,13 +1,10 @@
-"use strict";
-import { Model } from "sequelize";
-export default (sequelize, DataTypes) => {
+'use strict';
+const { Model } = require('sequelize');
+
+module.exports = (sequelize, DataTypes) => {
     class Allcodes extends Model {
-        /**
-         * Helper method for defining associations.
-         * This method is not a part of Sequelize lifecycle.
-         * The `models/index` file will call this method automatically.
-         */
         static associate(models) {
+            // define association here if needed
         }
     }
     Allcodes.init(
@@ -19,9 +16,9 @@ export default (sequelize, DataTypes) => {
         },
         {
             sequelize,
-            modelName: "Allcodes",
-            freezeTableName: true,     // Giữ nguyên tên bảng
-            tableName: "allcodes",     // Đúng với tên bảng trong MySQL
+            modelName: 'Allcodes',
+            freezeTableName: true,
+            tableName: 'allcodes',
         }
     );
     return Allcodes;

@@ -1,6 +1,7 @@
 "use strict";
+
 /** @type {import('sequelize-cli').Migration} */
-export default {
+module.exports =  {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable("evaluations_criteria", {
       id: {
@@ -11,9 +12,11 @@ export default {
       },
       evaluationID: {
         type: Sequelize.INTEGER,
+        allowNull: false,
       },
       criterion_name: {
         type: Sequelize.STRING,
+
       },
       score: {
         type: Sequelize.DECIMAL(3, 2),
@@ -28,6 +31,7 @@ export default {
       },
     });
   },
+
   async down(queryInterface, Sequelize) {
     await queryInterface.dropTable("evaluations_criteria");
   },

@@ -1,16 +1,12 @@
-"use strict";
-import { Model, DataTypes } from "sequelize";
-export default (sequelize, DataTypes) => {
+'use strict';
+const { Model } = require('sequelize');
+
+module.exports = (sequelize, DataTypes) => {
     class Cvs extends Model {
-        /**
-         * Helper method for defining associations.
-         * This method is not a part of Sequelize lifecycle.
-         * The `models/index` file will call this method automatically.
-         */
         static associate(models) {
             Cvs.belongsTo(models.Users, {
-                foreignKey: "userID"
-            })
+                foreignKey: 'userID'
+            });
         }
     }
     Cvs.init(
@@ -19,13 +15,13 @@ export default (sequelize, DataTypes) => {
             file_path: DataTypes.STRING,
             statusCv: DataTypes.STRING,
             submission_date: DataTypes.DATE,
-            feedback: DataTypes.TEXT("long"),
+            feedback: DataTypes.TEXT('long'),
         },
         {
             sequelize,
-            modelName: "Cvs",
-            freezeTableName: true,     // Giữ nguyên tên bảng
-            tableName: "cvs",     // Đúng với tên bảng trong MySQL
+            modelName: 'Cvs',
+            freezeTableName: true,
+            tableName: 'cvs',
         }
     );
     return Cvs;

@@ -1,13 +1,10 @@
-"use strict";
-import { Model } from "sequelize";
-export default (sequelize, DataTypes) => {
+'use strict';
+const { Model } = require('sequelize');
+
+module.exports = (sequelize, DataTypes) => {
     class Assigned_Tasks extends Model {
-        /**
-         * Helper method for defining associations.
-         * This method is not a part of Sequelize lifecycle.
-         * The `models/index` file will call this method automatically.
-         */
         static associate(models) {
+            // Định nghĩa quan hệ nếu có
         }
     }
     Assigned_Tasks.init(
@@ -19,9 +16,9 @@ export default (sequelize, DataTypes) => {
         },
         {
             sequelize,
-            modelName: "Assigned_Tasks",
-            freezeTableName: true,     // Giữ nguyên tên bảng
-            tableName: "assigned_tasks",     // Đúng với tên bảng trong MySQL
+            modelName: 'Assigned_Tasks',
+            freezeTableName: true,
+            tableName: 'assigned_tasks',
         }
     );
     return Assigned_Tasks;

@@ -1,13 +1,10 @@
-"use strict";
-import { Model } from "sequelize";
-export default (sequelize, DataTypes) => {
+'use strict';
+const { Model } = require('sequelize');
+
+module.exports = (sequelize, DataTypes) => {
   class Quizzes_Selected_Answers extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
     static associate(models) {
+      // Define associations here nếu có
     }
   }
   Quizzes_Selected_Answers.init(
@@ -18,9 +15,9 @@ export default (sequelize, DataTypes) => {
     },
     {
       sequelize,
-      modelName: "Quizzes_Selected_Answers",
-      freezeTableName: true,     // Giữ nguyên tên bảng
-      tableName: "quizzes_selected_answers",     // Đúng với tên bảng trong MySQL
+      modelName: 'Quizzes_Selected_Answers',
+      freezeTableName: true,
+      tableName: 'quizzes_selected_answers',
     }
   );
   return Quizzes_Selected_Answers;

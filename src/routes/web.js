@@ -1,18 +1,19 @@
-import express from "express";
-import { cvController } from "../controller/cvControlller.js";  // nhớ thêm .js nếu dùng ES module
+const express = require("express");
+const cvController = require("../controller/cvControlller");
 
 const router = express.Router();
 
 const initWebRoutes = (app) => {
-    // get list cv
     router.get("/api/get-cv", cvController.getCV);
-    // create cv
     router.post("/api/create-cv", cvController.createCV);
-    // get cv by id user
     router.get("/api/get-cv-by-id", cvController.getDetailCvByIdUser);
-    // Delete CV
-    router.put("/api/update-cv-by-userId", cvController.updateStatusCV)
+    router.put("/api/update-cv-by-userId", cvController.updateStatusCV);
+
+    router.get("/", (req, res) => {
+        return res.send("Hello Backend PSI");
+    });
+
     return app.use("/", router);
 };
 
-export default initWebRoutes;
+module.exports = initWebRoutes;

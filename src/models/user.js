@@ -1,16 +1,10 @@
-"use strict";
-import { Model } from "sequelize";
-export default (sequelize, DataTypes) => {
+'use strict';
+const { Model } = require('sequelize');
+
+module.exports = (sequelize, DataTypes) => {
     class Users extends Model {
-        /**
-         * Helper method for defining associations.
-         * This method is not a part of Sequelize lifecycle.
-         * The `models/index` file will call this method automatically.
-         */
         static associate(models) {
-            Users.hasOne(models.Cvs, {
-                foreignKey: "userID"
-            })
+            Users.hasOne(models.Cvs, { foreignKey: 'userID' });
         }
     }
     Users.init(
@@ -25,13 +19,13 @@ export default (sequelize, DataTypes) => {
             major: DataTypes.STRING,
             year: DataTypes.INTEGER,
             gpa: DataTypes.DECIMAL(3, 2),
-            image: DataTypes.BLOB("long"),
+            image: DataTypes.BLOB('long'),
         },
         {
             sequelize,
-            modelName: "Users",
-            freezeTableName: true,     // Giữ nguyên tên bảng
-            tableName: "users",     // Đúng với tên bảng trong MySQL
+            modelName: 'Users',
+            freezeTableName: true,
+            tableName: 'users',
         }
     );
     return Users;

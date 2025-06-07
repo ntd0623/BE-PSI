@@ -1,7 +1,7 @@
-import { where } from "sequelize";
-import db from "../models/index.js";
+const { where } = require("sequelize");
+const db = require("../models/index.js");
 
-//handle get CV submitted
+// handle get CV submitted
 let handleGetCV = () => {
     return new Promise(async (resolve, reject) => {
         try {
@@ -11,15 +11,15 @@ let handleGetCV = () => {
                     {
                         model: db.Users,
                         attributes: ["fullName", "email", "studentID", "school_name", "major", "year"],
-                    }
+                    },
                 ],
                 raw: true,
-                nest: true
+                nest: true,
             });
-            console.log("Check data: ", data)
+            console.log("Check data: ", data);
             resolve({
                 errCode: 0,
-                data: data
+                data: data,
             });
         } catch (error) {
             reject(error);
@@ -27,53 +27,50 @@ let handleGetCV = () => {
     });
 };
 
-
 // Check validate input
-
 let checkValidate = (inputData, requiredFields) => {
     for (let i = 0; i < requiredFields.length; i++) {
         let field = requiredFields[i];
         if (inputData[field] === null || !inputData[field]) {
             return {
                 isValid: true,
-                message: `Missing ${field} !`
+                message: `Missing ${field} !`,
             };
         }
     }
-
     return {
         isValid: false,
-        message: "OK"
+        message: "OK",
     };
 };
+
 // handle create CV
 let handleCreateCV = (input) => {
     return new Promise(async (resolve, reject) => {
         try {
-
-            let { isValid, message } = checkValidate(input, ["userID", "file_path", "submitted_date"]);
+            let { isValid, message } = checkValidate(input, ["userID", "file_path", "submission_date"]);
             if (isValid) {
                 resolve({
                     errCode: 2,
-                    message: message
-                })
+                    message: message,
+                });
             } else {
                 await db.Cvs.create({
                     userID: input.userID,
                     file_path: input.file_path,
                     statusCv: "CV1",
                     submission_date: input.submission_date,
-                })
+                });
                 resolve({
                     errCode: 0,
-                    message: "Create CV successfully "
-                })
+                    message: "Create CV successfully",
+                });
             }
         } catch (e) {
-            reject(e)
+            reject(e);
         }
-    })
-}
+    });
+};
 
 // handle get detail Cv
 let handleGetDetailCV = (inputID) => {
@@ -82,8 +79,8 @@ let handleGetDetailCV = (inputID) => {
             if (!inputID) {
                 resolve({
                     errCode: 2,
-                    message: "Missing inputID !"
-                })
+                    message: "Missing inputID !",
+                });
             } else {
                 let data = await db.Cvs.findOne({
                     where: { userID: inputID },
@@ -91,21 +88,21 @@ let handleGetDetailCV = (inputID) => {
                         {
                             model: db.Users,
                             attributes: ["fullName", "email", "studentID", "school_name", "major", "year"],
-                        }
+                        },
                     ],
-                })
+                });
                 if (data) {
                     resolve({
                         errCode: 0,
-                        data: data
-                    })
+                        data: data,
+                    });
                 }
             }
         } catch (e) {
-            reject(e)
+            reject(e);
         }
-    })
-}
+    });
+};
 
 // handle update cv
 let handleUpdateCV = (input) => {
@@ -115,31 +112,31 @@ let handleUpdateCV = (input) => {
             if (isValid) {
                 resolve({
                     errCode: 2,
-                    message: message
-                })
+                    message: message,
+                });
             } else {
                 let data = await db.Cvs.findOne({
                     where: { userID: input.userID },
-                })
+                });
                 if (data) {
                     await data.update({
-                        statusCv: input.statusCv
-                    })
+                        statusCv: input.statusCv,
+                    });
                     resolve({
                         errCode: 0,
-                        message: "update Cv successfully !"
-                    })
+                        message: "update Cv successfully !",
+                    });
                 } else {
                     resolve({
                         errCode: -1,
-                        message: "Cv not found !"
-                    })
+                        message: "Cv not found !",
+                    });
                 }
             }
         } catch (e) {
-            reject(e)
+            reject(e);
         }
-    })
-}
+    });
+};
 
-export const cvService = { handleGetCV, handleCreateCV, handleGetDetailCV, handleUpdateCV }
+module.exports = { handleGetCV, handleCreateCV, handleGetDetailCV, handleUpdateCV };
