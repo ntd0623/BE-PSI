@@ -1,8 +1,9 @@
-"use strict";
+'use strict';
+
 /** @type {import('sequelize-cli').Migration} */
-export default {
+module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable("assigned_tasks", {
+    await queryInterface.createTable('assigned_tasks', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -32,7 +33,8 @@ export default {
       },
     });
   },
+
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable("internship_task");
+    await queryInterface.dropTable('assigned_tasks'); // sửa đúng tên bảng
   },
 };

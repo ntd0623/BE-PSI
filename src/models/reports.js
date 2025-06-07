@@ -1,28 +1,25 @@
-"use strict";
-import { Model } from "sequelize";
-export default (sequelize, DataTypes) => {
+'use strict';
+const { Model } = require('sequelize');
+
+module.exports = (sequelize, DataTypes) => {
     class Reports extends Model {
-        /**
-         * Helper method for defining associations.
-         * This method is not a part of Sequelize lifecycle.
-         * The `models/index` file will call this method automatically.
-         */
         static associate(models) {
+            // define association here if needed
         }
     }
     Reports.init(
         {
             userID: DataTypes.STRING,
             title: DataTypes.STRING,
-            description: DataTypes.TEXT("long"),
+            description: DataTypes.TEXT('long'),
             reportType: DataTypes.STRING,
             reportStatus: DataTypes.STRING,
         },
         {
             sequelize,
-            modelName: "Reports",
-            freezeTableName: true,     // Giữ nguyên tên bảng
-            tableName: "reports",     // Đúng với tên bảng trong MySQL
+            modelName: 'Reports',
+            freezeTableName: true,
+            tableName: 'reports',
         }
     );
     return Reports;

@@ -1,13 +1,10 @@
-"use strict";
-import { Model } from "sequelize";
-export default (sequelize, DataTypes) => {
+'use strict';
+const { Model } = require('sequelize');
+
+module.exports = (sequelize, DataTypes) => {
     class Evaluations_Criteria extends Model {
-        /**
-         * Helper method for defining associations.
-         * This method is not a part of Sequelize lifecycle.
-         * The `models/index` file will call this method automatically.
-         */
         static associate(models) {
+            // Định nghĩa quan hệ nếu cần
         }
     }
     Evaluations_Criteria.init(
@@ -18,9 +15,9 @@ export default (sequelize, DataTypes) => {
         },
         {
             sequelize,
-            modelName: "Evaluations_Criteria",
-            freezeTableName: true,     // Giữ nguyên tên bảng
-            tableName: "evaluations_criteria",     // Đúng với tên bảng trong MySQL
+            modelName: 'Evaluations_Criteria',
+            freezeTableName: true,
+            tableName: 'evaluations_criteria',
         }
     );
     return Evaluations_Criteria;

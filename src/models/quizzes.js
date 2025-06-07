@@ -1,27 +1,24 @@
-"use strict";
-import { Model } from "sequelize";
-export default (sequelize, DataTypes) => {
-    class Quizzes extends Model {
-        /**
-         * Helper method for defining associations.
-         * This method is not a part of Sequelize lifecycle.
-         * The `models/index` file will call this method automatically.
-         */
-        static associate(models) {
-        }
+'use strict';
+const { Model } = require('sequelize');
+
+module.exports = (sequelize, DataTypes) => {
+  class Quizzes extends Model {
+    static associate(models) {
+      // Định nghĩa quan hệ nếu cần
     }
-    Quizzes.init(
-        {
-            title: DataTypes.STRING,
-            description: DataTypes.TEXT("long"),
-            duration_minutes: DataTypes.INTEGER,
-        },
-        {
-            sequelize,
-            modelName: "Quizzes",
-            freezeTableName: true,     // Giữ nguyên tên bảng
-            tableName: "quizzes",     // Đúng với tên bảng trong MySQL
-        }
-    );
-    return Quizzes;
+  }
+  Quizzes.init(
+    {
+      title: DataTypes.STRING,
+      description: DataTypes.TEXT('long'),
+      duration_minutes: DataTypes.INTEGER,
+    },
+    {
+      sequelize,
+      modelName: 'Quizzes',
+      freezeTableName: true,
+      tableName: 'quizzes',
+    }
+  );
+  return Quizzes;
 };

@@ -1,6 +1,7 @@
 "use strict";
+
 /** @type {import('sequelize-cli').Migration} */
-export default {
+module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable("evaluations", {
       id: {
@@ -21,7 +22,7 @@ export default {
       evaluation_date: {
         type: Sequelize.DATE,
       },
-      evalutationType: {
+      evaluationType: { // ✅ sửa chính tả
         type: Sequelize.STRING,
       },
       average_score: {
@@ -37,6 +38,7 @@ export default {
       },
     });
   },
+
   async down(queryInterface, Sequelize) {
     await queryInterface.dropTable("evaluations");
   },

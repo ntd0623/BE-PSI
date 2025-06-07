@@ -1,8 +1,9 @@
-"use strict";
+'use strict';
+
 /** @type {import('sequelize-cli').Migration} */
-export default {
+module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable("internship_tasks", {
+    await queryInterface.createTable('internship_tasks', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -13,7 +14,7 @@ export default {
         type: Sequelize.STRING,
       },
       description: {
-        type: Sequelize.TEXT("long"),
+        type: Sequelize.TEXT('long'),
       },
       priorityID: {
         type: Sequelize.STRING,
@@ -31,7 +32,8 @@ export default {
       },
     });
   },
+
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable("internship_task");
+    await queryInterface.dropTable('internship_tasks'); // ⚠ sửa đúng tên bảng ở đây
   },
 };

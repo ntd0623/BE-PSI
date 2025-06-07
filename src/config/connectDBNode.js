@@ -1,7 +1,5 @@
-import { Sequelize } from "sequelize";
-import dotenv from "dotenv";
-
-dotenv.config();
+const { Sequelize } = require('sequelize');
+require('dotenv').config();
 
 const sequelize = new Sequelize(
   process.env.DB_DATABASE_NAME,
@@ -15,15 +13,15 @@ const sequelize = new Sequelize(
     query: {
       raw: true,
     },
-    timezone: "+07:00",
+    timezone: '+07:00',
     dialectOptions: {
-      charset: "utf8mb4",
+      charset: 'utf8mb4',
       supportBigNumbers: true,
       bigNumberStrings: true,
     },
     define: {
-      charset: "utf8mb4",
-      collate: "utf8mb4_unicode_ci",
+      charset: 'utf8mb4',
+      collate: 'utf8mb4_unicode_ci',
     },
   }
 );
@@ -31,10 +29,10 @@ const sequelize = new Sequelize(
 const connectDB = async () => {
   try {
     await sequelize.authenticate();
-    console.log("✅ Connection has been established successfully.");
+    console.log('✅ Connection has been established successfully.');
   } catch (error) {
-    console.error("❌ Unable to connect to the database:", error);
+    console.error('❌ Unable to connect to the database:', error);
   }
 };
 
-export default connectDB;
+module.exports = connectDB;
