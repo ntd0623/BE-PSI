@@ -67,6 +67,9 @@ module.exports = {
       references: {
         type: Sequelize.STRING,
       },
+      batchID: {
+        type: Sequelize.INTEGER,
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATEONLY,

@@ -3,7 +3,11 @@ const cvService = require("../services/cvService.js");
 // get list cv
 const getCV = async (req, res) => {
     try {
-        const cvs = await cvService.handleGetCV();
+        const { statusCv, batchID } = req.query;
+
+        // Gửi filter xuống service
+        const cvs = await cvService.handleGetCV({ statusCv, batchID });
+
         return res.status(200).json(cvs);
     } catch (e) {
         console.error("Error from server!", e);
