@@ -9,34 +9,42 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      userID: {
+      cv_id: {
         type: Sequelize.INTEGER,
       },
-      title: {
+      name: {
         type: Sequelize.STRING,
       },
       description: {
         type: Sequelize.TEXT("long"),
       },
-      statusProject: {
+      role: {
         type: Sequelize.STRING,
       },
-      progress_percent: {
-        type: Sequelize.INTEGER,
+      technologies: {
+        type: Sequelize.STRING,
       },
-      submission_date: {
-        type: Sequelize.DATE,
+      github_url: {
+        type: Sequelize.STRING,
       },
-      score: {
-        type: Sequelize.DECIMAL(3, 2),
+      demo_url: {
+        type: Sequelize.STRING,
+      },
+      start_date: {
+        type: Sequelize.DATEONLY,
+      },
+      end_date: {
+        type: Sequelize.STRING,
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE,
+        type: Sequelize.DATEONLY,
+        defaultValue: Sequelize.NOW
       },
-      updatedAt: {
+      updatedAT: {
         allowNull: false,
-        type: Sequelize.DATE,
+        type: Sequelize.DATEONLY,
+        defaultValue: Sequelize.NOW
       },
     });
   },

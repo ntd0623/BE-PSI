@@ -22,15 +22,17 @@ module.exports = {
         type: Sequelize.BOOLEAN,
       },
       submitted_at: {
-        type: Sequelize.DATE,
+        type: Sequelize.DATEONLY,
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE,
+        type: Sequelize.DATEONLY,
+        defaultValue: Sequelize.NOW
       },
-      updatedAt: {
+      updatedAT: {
         allowNull: false,
-        type: Sequelize.DATE,
+        type: Sequelize.DATEONLY,
+        defaultValue: Sequelize.NOW
       },
     });
   },

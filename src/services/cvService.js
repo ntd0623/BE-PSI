@@ -1,5 +1,6 @@
 const { where } = require("sequelize");
 const db = require("../models/index.js");
+const projects = require("../models/projects.js");
 
 // handle get CV submitted
 let handleGetCV = () => {
@@ -48,19 +49,86 @@ let checkValidate = (inputData, requiredFields) => {
 let handleCreateCV = (input) => {
     return new Promise(async (resolve, reject) => {
         try {
-            let { isValid, message } = checkValidate(input, ["userID", "file_path", "submission_date"]);
+            let { isValid, message } = checkValidate(input,
+                ["userID", "fullName", "email", "phoneNumber",
+                    "birthDay", "genderID", "address", "school_name",
+                    "major", "degreeID", "gpa", "graduationYear",
+                    "career_objective", "references", "skills"]);
             if (isValid) {
                 resolve({
                     errCode: 2,
                     message: message,
                 });
             } else {
-                await db.Cvs.create({
+                let infoCv = await db.Cvs.create({
                     userID: input.userID,
-                    file_path: input.file_path,
+                    fullName: input.fullName,
+                    email: input.email,
+                    phoneNumber: input.phoneNumber,
+                    birthDay: input.birthDay,
+                    genderID: input.genderID,
+                    address: input.address,
+                    schoolName: input.school_name,
+                    major: input.major,
+                    degreeID: input.degreeID,
+                    gpa: input.gpa,
+                    graduationYear: input.graduationYear,
+                    career_objective: input.career_objective,
+                    archivement: input.archivements,
+                    references: input.references,
+                    image: input.image,
                     statusCv: "CV1",
-                    submission_date: input.submission_date,
+                    submission_date: new Date()
+
                 });
+                // Process Skill (convert object to more create)
+                const allSkills = [];
+                for (const type in input.skills) {
+                    input.skills[type].forEach(name => {
+                        allSkills.push({ name, type });
+                    });
+                }
+                // create more skill
+                const insertedSkills = [];
+                for (const skill of allSkills) {
+                    const [record, created] = await db.Skills.findOrCreate({
+                        where: { name: skill.name, type: skill.type },
+                        defaults: skill
+                    });
+                    console.log(`${record.name} (${record.type}) → ${created ? 'Created' : 'Existed'}`);
+                    insertedSkills.push(record);
+                }
+                //create data cv_skill
+                await db.Cv_skill.bulkCreate(
+                    insertedSkills.map(skill => ({
+                        cv_id: infoCv.id,
+                        skill_id: skill.id
+                    }))
+                );
+
+                // project
+                if (input.projects && Array.isArray(input.projects)) {
+                    const formattedProjects = input.projects.map(project => ({
+                        cv_id: infoCv.id,
+                        name: project.name?.trim(),
+                        technologies: project.technologies?.trim(),
+                        description: project.description?.trim(),
+                        link: project.link?.trim()
+                    }));
+                    await db.Projects.bulkCreate(formattedProjects)
+                }
+
+                if (input.experience && Array.isArray(input.experience)) {
+                    const formattedExperiences = input.experience.map(experience => ({
+                        cv_id: infoCv.id,
+                        position: experience.position?.trim(),
+                        company: experience.nameCompany?.trim(),
+                        description: experience.description?.trim(),
+                        start_date: experience.startDate?.trim(),
+                        end_date: experience.endDate?.trim()
+                    }));
+                    await db.Work_Experiences.bulkCreate(formattedExperiences)
+                }
                 resolve({
                     errCode: 0,
                     message: "Create CV successfully",

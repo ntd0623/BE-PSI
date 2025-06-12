@@ -12,25 +12,70 @@ module.exports = {
       userID: {
         type: Sequelize.INTEGER,
       },
-      file_path: {
+      fullName: {
         type: Sequelize.STRING,
+      },
+      email: {
+        type: Sequelize.STRING,
+      },
+      phoneNumber: {
+        type: Sequelize.STRING,
+      },
+      birthDay: {
+        type: Sequelize.DATEONLY,
+      },
+      genderID: {
+        type: Sequelize.STRING,
+      },
+      address: {
+        type: Sequelize.STRING,
+      },
+      schoolName: {
+        type: Sequelize.STRING,
+      },
+      major: {
+        type: Sequelize.STRING,
+      },
+      degreeID: {
+        type: Sequelize.STRING,
+      },
+      gpa: {
+        type: Sequelize.DECIMAL(3, 2),
+      },
+      graduationYear: {
+        type: Sequelize.INTEGER,
+      },
+      image: {
+        type: Sequelize.BLOB('long'),
       },
       statusCv: {
         type: Sequelize.STRING,
       },
       submission_date: {
-        type: Sequelize.DATE,
+        type: Sequelize.DATEONLY,
+        defaultValue: Sequelize.NOW
       },
       feedback: {
         type: Sequelize.TEXT("long"),
       },
+      career_objective: {
+        type: Sequelize.STRING,
+      },
+      archivement: {
+        type: Sequelize.STRING,
+      },
+      references: {
+        type: Sequelize.STRING,
+      },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE,
+        type: Sequelize.DATEONLY,
+        defaultValue: Sequelize.NOW
       },
-      updatedAt: {
+      updatedAT: {
         allowNull: false,
-        type: Sequelize.DATE,
+        type: Sequelize.DATEONLY,
+        defaultValue: Sequelize.NOW
       },
     });
   },

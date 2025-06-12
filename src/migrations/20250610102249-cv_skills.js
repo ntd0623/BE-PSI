@@ -1,33 +1,19 @@
-'use strict';
-
+"use strict";
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('reports', {
+    await queryInterface.createTable("cv_Skill", {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      userID: {
+      cv_id: {
         type: Sequelize.INTEGER,
       },
-      title: {
-        type: Sequelize.STRING,
-      },
-      description: {
-        type: Sequelize.TEXT('long'),
-      },
-      reportType: {
-        type: Sequelize.STRING,
-      },
-      reportStatus: {
-        type: Sequelize.STRING,
-      },
-      progress_percent: {
+      skill_id: {
         type: Sequelize.INTEGER,
-        defaultValue: 0,
       },
       createdAt: {
         allowNull: false,
@@ -41,8 +27,7 @@ module.exports = {
       },
     });
   },
-
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('reports'); // sửa đúng tên bảng
+    await queryInterface.dropTable("cv_Skill");
   },
 };
