@@ -13,6 +13,14 @@ module.exports = (sequelize, DataTypes) => {
                 }
 
             )
+            Allcodes.hasMany(models.Internship_Batches,
+                {
+                    foreignKey: 'name',
+                    sourceKey: "key",
+                    as: "dataInternship"
+                }
+
+            )
         }
     }
     Allcodes.init(

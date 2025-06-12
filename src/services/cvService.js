@@ -3,21 +3,45 @@ const db = require("../models/index.js");
 const projects = require("../models/projects.js");
 
 // handle get CV submitted
-let handleGetCV = () => {
+let handleGetCV = ({ statusCv = "", batchID = "" }) => {
     return new Promise(async (resolve, reject) => {
         try {
+            let whereCvs = {};
+            if (statusCv) {
+                whereCvs.statusCv = statusCv;
+            }
+
+            let whereBatch = {};
+            if (batchID) {
+                whereBatch.name = batchID;
+            }
+
             let data = await db.Cvs.findAll({
-                where: { statusCv: "CV1" },
+                where: whereCvs, // ✅ Dùng đúng here
                 include: [
                     {
-                        model: db.Users,
-                        attributes: ["fullName", "email", "studentID", "school_name", "major", "year"],
+                        model: db.Allcodes,
+                        as: "dataStatus",
+                        attributes: ["value_VI", "value_EN"]
                     },
+                    {
+                        model: db.Internship_Batches,
+                        as: "internshipBatch",
+                        where: Object.keys(whereBatch).length > 0 ? whereBatch : undefined,
+                        required: Object.keys(whereBatch).length > 0, // ✅ chỉ join bắt buộc nếu có điều kiện
+                        include: [
+                            {
+                                model: db.Allcodes,
+                                as: "dataInternship",
+                                attributes: ["value_VI", "value_EN"]
+                            }
+                        ]
+                    }
                 ],
                 raw: true,
                 nest: true,
             });
-            console.log("Check data: ", data);
+
             resolve({
                 errCode: 0,
                 data: data,
@@ -27,6 +51,8 @@ let handleGetCV = () => {
         }
     });
 };
+
+
 
 // Check validate input
 let checkValidate = (inputData, requiredFields) => {
@@ -176,7 +202,7 @@ let handleGetDetailCV = (inputID) => {
 let handleUpdateCV = (input) => {
     return new Promise(async (resolve, reject) => {
         try {
-            let { isValid, message } = checkValidate(input, ["userID", "statusCv"]);
+            let { isValid, message } = checkValidate(input, ["id", "statusCv"]);
             if (isValid) {
                 resolve({
                     errCode: 2,
@@ -184,7 +210,7 @@ let handleUpdateCV = (input) => {
                 });
             } else {
                 let data = await db.Cvs.findOne({
-                    where: { userID: input.userID },
+                    where: { id: input.id },
                 });
                 if (data) {
                     await data.update({

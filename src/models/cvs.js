@@ -22,6 +22,10 @@ module.exports = (sequelize, DataTypes) => {
                 as: 'skills'
             });
             Cvs.hasMany(models.Projects, { foreignKey: 'cv_id' });
+            Cvs.belongsTo(models.Internship_Batches, {
+                foreignKey: 'batchID',
+                as: 'internshipBatch'
+            });
         }
     }
     Cvs.init(
@@ -45,6 +49,7 @@ module.exports = (sequelize, DataTypes) => {
             career_objective: DataTypes.STRING,
             archivement: DataTypes.STRING,
             references: DataTypes.STRING,
+            batchID: DataTypes.INTEGER,
         },
         {
             sequelize,
