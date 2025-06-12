@@ -12,7 +12,7 @@ module.exports = (sequelize, DataTypes) => {
       title: DataTypes.STRING,
       description: DataTypes.TEXT('long'),
       priorityID: DataTypes.STRING,
-      deadline: DataTypes.DATE,
+      deadline: DataTypes.DATEONLY,
     },
     {
       sequelize,

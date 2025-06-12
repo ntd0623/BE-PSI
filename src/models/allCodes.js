@@ -5,6 +5,14 @@ module.exports = (sequelize, DataTypes) => {
     class Allcodes extends Model {
         static associate(models) {
             // define association here if needed
+            Allcodes.hasMany(models.Cvs,
+                {
+                    foreignKey: 'statusCv',
+                    sourceKey: "key",
+                    as: "dataStatus"
+                }
+
+            )
         }
     }
     Allcodes.init(

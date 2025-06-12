@@ -20,15 +20,17 @@ module.exports = {
         type: Sequelize.STRING,
       },
       deadline: {
-        type: Sequelize.DATE,
+        type: Sequelize.DATEONLY,
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE,
+        type: Sequelize.DATEONLY,
+        defaultValue: Sequelize.NOW
       },
-      updatedAt: {
+      updatedAT: {
         allowNull: false,
-        type: Sequelize.DATE,
+        type: Sequelize.DATEONLY,
+        defaultValue: Sequelize.NOW
       },
     });
   },

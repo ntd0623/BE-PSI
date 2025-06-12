@@ -5,17 +5,20 @@ module.exports = (sequelize, DataTypes) => {
   class Projects extends Model {
     static associate(models) {
       // Định nghĩa quan hệ nếu có
+      Projects.belongsTo(models.Cvs, { foreignKey: 'cv_id' });
     }
   }
   Projects.init(
     {
-      userID: DataTypes.INTEGER,
-      title: DataTypes.STRING,
+      cv_id: DataTypes.INTEGER,
+      name: DataTypes.STRING,
       description: DataTypes.TEXT('long'),
-      statusProject: DataTypes.STRING,
-      progress_percent: DataTypes.INTEGER,
-      submisstion_date: DataTypes.DATE,
-      score: DataTypes.DECIMAL(3, 2),
+      role: DataTypes.STRING,
+      technologies: DataTypes.STRING,
+      github_url: DataTypes.STRING,
+      demo_url: DataTypes.STRING,
+      start_date: DataTypes.DATEONLY,
+      end_date: DataTypes.DATEONLY,
     },
     {
       sequelize,

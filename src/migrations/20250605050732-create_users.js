@@ -16,40 +16,20 @@ module.exports = {
       password: {
         type: Sequelize.STRING,
       },
-      fullName: {
-        type: Sequelize.STRING,
-      },
+
       roleID: {
         type: Sequelize.STRING,
       },
-      genderID: {
-        type: Sequelize.STRING,
-      },
-      studentID: {
-        type: Sequelize.STRING,
-      },
-      school_name: {
-        type: Sequelize.STRING,
-      },
-      major: {
-        type: Sequelize.STRING,
-      },
-      year: {
-        type: Sequelize.INTEGER,
-      },
-      gpa: {
-        type: Sequelize.DECIMAL(3, 2),
-      },
-      image: {
-        type: Sequelize.BLOB('long'),
-      },
+
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE,
+        type: Sequelize.DATEONLY,
+        defaultValue: Sequelize.NOW
       },
-      updatedAt: {
+      updatedAT: {
         allowNull: false,
-        type: Sequelize.DATE,
+        type: Sequelize.DATEONLY,
+        defaultValue: Sequelize.NOW
       },
     });
   },

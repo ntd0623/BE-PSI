@@ -12,7 +12,7 @@ module.exports = (sequelize, DataTypes) => {
       userID: DataTypes.INTEGER,
       evaluator_name: DataTypes.STRING,
       company_name: DataTypes.STRING,
-      evaluation_date: DataTypes.DATE,
+      evaluation_date: DataTypes.DATEONLY,
       evalutationType: DataTypes.STRING,
       average_score: DataTypes.DECIMAL(3, 2),
     },

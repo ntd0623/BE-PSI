@@ -19,8 +19,8 @@ module.exports = {
       company_name: {
         type: Sequelize.STRING,
       },
-      evaluation_date: {
-        type: Sequelize.DATE,
+      evaluation_DATEONLY: {
+        type: Sequelize.DATEONLY,
       },
       evaluationType: { // ✅ sửa chính tả
         type: Sequelize.STRING,
@@ -30,11 +30,13 @@ module.exports = {
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE,
+        type: Sequelize.DATEONLY,
+        defaultValue: Sequelize.NOW
       },
-      updatedAt: {
+      updatedAT: {
         allowNull: false,
-        type: Sequelize.DATE,
+        type: Sequelize.DATEONLY,
+        defaultValue: Sequelize.NOW
       },
     });
   },

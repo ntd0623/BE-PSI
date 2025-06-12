@@ -13,7 +13,7 @@ module.exports = (sequelize, DataTypes) => {
       quiz_id: DataTypes.INTEGER,
       total_score: DataTypes.DECIMAL(3, 2),
       passed: DataTypes.BOOLEAN,
-      submitted_at: DataTypes.DATE,
+      submitted_at: DataTypes.DATEONLY,
     },
     {
       sequelize,

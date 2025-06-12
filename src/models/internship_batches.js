@@ -9,10 +9,10 @@ module.exports = (sequelize, DataTypes) => {
   }
   Internship_Batches.init(
     {
-      userID: DataTypes.INTEGER,
+      cv_id: DataTypes.INTEGER,
       name: DataTypes.STRING,
-      start_date: DataTypes.DATE,
-      end_date: DataTypes.DATE,
+      start_date: DataTypes.DATEONLY,
+      end_date: DataTypes.DATEONLY,
     },
     {
       sequelize,
