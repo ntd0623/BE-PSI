@@ -9,6 +9,13 @@ module.exports = (sequelize, DataTypes) => {
             });
             Cvs.belongsTo(models.Allcodes,
                 {
+                    foreignKey: 'degreeID',
+                    targetKey: "key",
+                    as: "dataDegree"
+                }
+            )
+            Cvs.belongsTo(models.Allcodes,
+                {
                     foreignKey: 'statusCv',
                     targetKey: "key",
                     as: "dataStatus"
@@ -21,7 +28,7 @@ module.exports = (sequelize, DataTypes) => {
                 otherKey: 'skill_id',
                 as: 'skills'
             });
-            Cvs.hasMany(models.Projects, { foreignKey: 'cv_id' });
+            Cvs.hasMany(models.Projects, { foreignKey: 'cv_id', as: "projects" });
             Cvs.belongsTo(models.Internship_Batches, {
                 foreignKey: 'batchID',
                 as: 'internshipBatch'
