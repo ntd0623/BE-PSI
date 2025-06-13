@@ -56,7 +56,7 @@ npm install
     - DB_PORT=3306
     - DB_USER=root
     - DB_PASSWORD=your_password
-    - DB_NAME=movie_booking_db
+    - DB_NAME=psi_dtb
 ```
 
 ### 4. Chạy development
