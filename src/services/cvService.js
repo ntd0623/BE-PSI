@@ -21,6 +21,11 @@ let handleGetCV = ({ statusCv = "", batchID = "" }) => {
                 include: [
                     {
                         model: db.Allcodes,
+                        as: "dataDegree",
+                        attributes: ["value_VI", "value_EN"]
+                    },
+                    {
+                        model: db.Allcodes,
                         as: "dataStatus",
                         attributes: ["value_VI", "value_EN"]
                     },
@@ -36,9 +41,21 @@ let handleGetCV = ({ statusCv = "", batchID = "" }) => {
                                 attributes: ["value_VI", "value_EN"]
                             }
                         ]
+                    },
+                    {
+                        model: db.Projects,
+                        as: "projects"
+                    },
+                    {
+                        model: db.Work_Experiences,
+                        as: "experiences",
+                    },
+                    {
+                        model: db.Skills,
+                        as: "skills"
                     }
                 ],
-                raw: true,
+                raw: false,
                 nest: true,
             });
 
@@ -51,8 +68,6 @@ let handleGetCV = ({ statusCv = "", batchID = "" }) => {
         }
     });
 };
-
-
 
 // Check validate input
 let checkValidate = (inputData, requiredFields) => {
@@ -180,9 +195,38 @@ let handleGetDetailCV = (inputID) => {
                     where: { userID: inputID },
                     include: [
                         {
-                            model: db.Users,
-                            attributes: ["fullName", "email", "studentID", "school_name", "major", "year"],
+                            model: db.Allcodes,
+                            as: "dataStatus",
+                            attributes: ["value_VI", "value_EN"]
                         },
+                        {
+                            model: db.Allcodes,
+                            as: "dataDegree",
+                            attributes: ["value_VI", "value_EN"]
+                        },
+                        {
+                            model: db.Internship_Batches,
+                            as: "internshipBatch",
+                            include: [
+                                {
+                                    model: db.Allcodes,
+                                    as: "dataInternship",
+                                    attributes: ["value_VI", "value_EN"]
+                                }
+                            ]
+                        },
+                        {
+                            model: db.Projects,
+                            as: "projects"
+                        },
+                        {
+                            model: db.Work_Experiences,
+                            as: "experiences",
+                        },
+                        {
+                            model: db.Skills,
+                            as: "skills"
+                        }
                     ],
                 });
                 if (data) {

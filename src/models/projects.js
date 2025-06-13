@@ -5,7 +5,7 @@ module.exports = (sequelize, DataTypes) => {
   class Projects extends Model {
     static associate(models) {
       // Định nghĩa quan hệ nếu có
-      Projects.belongsTo(models.Cvs, { foreignKey: 'cv_id' });
+      Projects.belongsTo(models.Cvs, { foreignKey: 'cv_id', as: "projects" });
     }
   }
   Projects.init(

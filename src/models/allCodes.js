@@ -13,6 +13,14 @@ module.exports = (sequelize, DataTypes) => {
                 }
 
             )
+            Allcodes.hasMany(models.Cvs,
+                {
+                    foreignKey: 'degreeID',
+                    sourceKey: "key",
+                    as: "dataDegree"
+                }
+
+            )
             Allcodes.hasMany(models.Internship_Batches,
                 {
                     foreignKey: 'name',
