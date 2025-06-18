@@ -1,6 +1,7 @@
 const express = require("express");
 const cvController = require("../controller/cvControlller");
 const userController = require("../controller/userController");
+const authController = require("../controller/authController");
 const router = express.Router();
 
 const initWebRoutes = (app) => {
@@ -19,6 +20,12 @@ const initWebRoutes = (app) => {
         return res.send("Hello Backend PSI");
     });
 
+    // Login
+    router.post("/api/login", userController.login)
+
+
+    // Login with google 
+    router.post("/api/auth/google-auth", authController.googleAuth)
     return app.use("/", router);
 };
 
