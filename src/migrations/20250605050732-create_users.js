@@ -20,6 +20,18 @@ module.exports = {
       roleID: {
         type: Sequelize.STRING,
       },
+      name: {
+        type: Sequelize.STRING,
+      },
+      avatar: {
+        type: Sequelize.STRING,
+      },
+      provider: {
+        type: Sequelize.STRING,
+      },
+      access_token: {
+        type: Sequelize.TEXT,
+      },
 
       createdAt: {
         allowNull: false,
