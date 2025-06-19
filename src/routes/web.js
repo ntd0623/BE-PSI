@@ -26,6 +26,9 @@ const initWebRoutes = (app) => {
 
     // Login with google 
     router.post("/api/auth/google-auth", authController.googleAuth)
+
+    // Login with Facebook
+    router.post("/api/auth/facebook", authController.facebookAuth);
     return app.use("/", router);
 };
 

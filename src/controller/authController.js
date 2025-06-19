@@ -16,6 +16,19 @@ const authController = {
             );
         }
     },
+    facebookAuth: async (req, res) => {
+        const { access_token } = req.body;
+
+        try {
+            const result = await authService.facebookAuthService(access_token);
+
+            return res.status(200).json(result);
+        } catch (err) {
+            console.error("Facebook login error:", err);
+            return res.status(401).json({ message: "Xác thực Facebook thất bại." });
+        }
+    }
+
 };
 
 module.exports = authController;
