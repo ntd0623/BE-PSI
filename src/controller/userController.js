@@ -26,8 +26,22 @@ let login = async (req, res) => {
     return res.status(200).json(userData);
 };
 
+const register = async (req, res) => {
+    try {
+        const result = await userService.handleRegister(req.body);
+        return res.status(200).json(result);
+    } catch (error) {
+        console.error("Register controller error:", error);
+        return res.status(500).json({
+            errCode: 1,
+            message: "Error from server !"
+        });
+    }
+};
+
 module.exports = {
     getAllStudentByCV,
     getAllCodes,
-    login
+    login,
+    register
 }

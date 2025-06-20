@@ -29,6 +29,8 @@ const initWebRoutes = (app) => {
 
     // Login with Facebook
     router.post("/api/auth/facebook", authController.facebookAuth);
+    // Register
+    router.post("/api/register", userController.register)
     return app.use("/", router);
 };
 
