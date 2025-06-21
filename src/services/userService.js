@@ -1,8 +1,9 @@
 const db = require("../models/index.js");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
-
+const axios = require("axios");
 const salt = bcrypt.genSaltSync(10);
+
 //hash password
 let hashUserPassWord = (password) => {
     return new Promise(async (resolve, reject) => {
@@ -14,9 +15,48 @@ let hashUserPassWord = (password) => {
         }
     });
 };
+
+// Register
+
+const handleRegister = async (input) => {
+    if (!input.captcha) {
+        return { errCode: 2, message: "Vui lòng xác minh captcha !" };
+    }
+
+    const { data } = await axios.post("https://www.google.com/recaptcha/api/siteverify", null, {
+        params: {
+            secret: process.env.BACK_END_SECRET_KEY_CAPTCHA,
+            response: input.captcha,
+        },
+    });
+
+    if (!data.success) {
+        return { errCode: 3, message: "Xác minh captcha thất bại !" };
+    }
+
+    const existingUser = await checkUserEmail(input.email);
+    if (existingUser) {
+        return { errCode: 4, message: "Email đã tồn tại. Vui lòng nhập email khác !" };
+    }
+
+    const user = await db.Users.create({
+        email: input.email,
+        password: await hashUserPassWord(input.password),
+        roleID: "R2",
+        name: input.name
+    });
+
+    if (!user) {
+        return { errCode: 5, message: "Không tìm thấy người dùng" };
+    }
+
+    return { errCode: 0, message: "Đăng ký thành công !" };
+};
+
+
 // check mail exists
 const checkUserEmail = async (email) => {
-    const user = await db.Users.findOne({ where: { email } });
+    const user = await db.Users.findOne({ where: { email: email } });
     return !!user;
 };
 
@@ -157,6 +197,7 @@ let getAllCodeService = (typeInput) => {
 module.exports = {
     handleGetListCV,
     getAllCodeService,
-    handleUserLogin
+    handleUserLogin,
+    handleRegister
 }
 
