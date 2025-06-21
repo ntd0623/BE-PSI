@@ -1,8 +1,16 @@
 const userService = require("../services/userService.js");
+const cvService = require("../services/cvService.js");
 let getAllStudentByCV = async (req, res) => {
     try {
-        let data = await userService.handleGetListCV();
-        return res.status(200).json(data)
+        let { statusCv, batchID, page, limit } = req.query;
+        const data = await cvService.handleGetCV({
+            statusCv,
+            batchID,
+            page,
+            limit,
+        });
+
+        return res.status(200).json(data);
     } catch (e) {
         console.error("Error from server!", e);
         return res.status(500).json({
@@ -10,7 +18,7 @@ let getAllStudentByCV = async (req, res) => {
             message: "Error from server!",
         });
     }
-}
+};
 
 let getAllCodes = async (req, res) => {
     let data = await userService.getAllCodeService(req.query.type);

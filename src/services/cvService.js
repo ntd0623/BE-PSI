@@ -1,11 +1,15 @@
 const { where } = require("sequelize");
 const db = require("../models/index.js");
 const projects = require("../models/projects.js");
-
+const emailService = require("./emailService.js")
 // handle get CV submitted
-let handleGetCV = ({ statusCv = "", batchID = "" }) => {
+let handleGetCV = ({ statusCv = "", batchID = "", page, limit = 3 }) => {
     return new Promise(async (resolve, reject) => {
         try {
+            const validPage = isNaN(+page) || +page < 1 ? 1 : +page;
+            const validLimit = isNaN(+limit) || +limit < 1 ? 3 : +limit;
+            const offset = (validPage - 1) * validLimit;
+
             let whereCvs = {};
             if (statusCv) {
                 whereCvs.statusCv = statusCv;
@@ -16,8 +20,8 @@ let handleGetCV = ({ statusCv = "", batchID = "" }) => {
                 whereBatch.name = batchID;
             }
 
-            let data = await db.Cvs.findAll({
-                where: whereCvs, // ✅ Dùng đúng here
+            const result = await db.Cvs.findAndCountAll({
+                where: whereCvs,
                 include: [
                     {
                         model: db.Allcodes,
@@ -33,7 +37,7 @@ let handleGetCV = ({ statusCv = "", batchID = "" }) => {
                         model: db.Internship_Batches,
                         as: "internshipBatch",
                         where: Object.keys(whereBatch).length > 0 ? whereBatch : undefined,
-                        required: Object.keys(whereBatch).length > 0, // ✅ chỉ join bắt buộc nếu có điều kiện
+                        required: Object.keys(whereBatch).length > 0,
                         include: [
                             {
                                 model: db.Allcodes,
@@ -48,26 +52,42 @@ let handleGetCV = ({ statusCv = "", batchID = "" }) => {
                     },
                     {
                         model: db.Work_Experiences,
-                        as: "experiences",
+                        as: "experiences"
                     },
                     {
                         model: db.Skills,
                         as: "skills"
                     }
                 ],
+                offset,
+                limit: +validLimit,
                 raw: false,
                 nest: true,
+                distinct: true,
             });
-
+            // encoded base64 render 
+            if (result && result.rows && result.rows.length > 0) {
+                result.rows.map((item, index) => {
+                    if (item.image) {
+                        item.image = Buffer.from(item.image, "base64").toString("binary");
+                    }
+                    return item;
+                });
+            }
             resolve({
                 errCode: 0,
-                data: data,
+                data: result.rows,
+                total: result.count,
+                page: +validPage,
+                limit: +validLimit
             });
         } catch (error) {
             reject(error);
         }
     });
 };
+
+
 
 // Check validate input
 let checkValidate = (inputData, requiredFields) => {
@@ -259,6 +279,11 @@ let handleUpdateCV = (input) => {
                 if (data) {
                     await data.update({
                         statusCv: input.statusCv,
+                    });
+                    await emailService.sendEmail({
+                        fullName: data.fullName,
+                        statusCv: data.statusCv,
+                        reciverEmail: data.email
                     });
                     resolve({
                         errCode: 0,
