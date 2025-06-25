@@ -202,17 +202,33 @@ let handleCreateCV = (input) => {
 };
 
 // handle get detail Cv
-let handleGetDetailCV = (inputID) => {
+let handleGetDetailCV = ({ id, statusCv = "", page, limit = 3 }) => {
     return new Promise(async (resolve, reject) => {
         try {
-            if (!inputID) {
+            if (!id) {
                 resolve({
                     errCode: 2,
                     message: "Missing inputID !",
                 });
             } else {
-                let data = await db.Cvs.findOne({
-                    where: { userID: inputID },
+                let whereCvs = {
+                    userID: id
+                };
+                if (statusCv) {
+                    whereCvs.statusCv = statusCv;
+                }
+
+                const validPage = isNaN(+page) || +page < 1 ? 1 : +page;
+                const validLimit = isNaN(+limit) || +limit < 1 ? 3 : +limit;
+                const offset = (validPage - 1) * validLimit;
+
+                let data = await db.Cvs.findAndCountAll({
+                    where: whereCvs,
+                    limit: validLimit,
+                    offset: offset,
+                    raw: false,
+                    nest: true,
+                    distinct: true,
                     include: [
                         {
                             model: db.Allcodes,
@@ -252,7 +268,10 @@ let handleGetDetailCV = (inputID) => {
                 if (data) {
                     resolve({
                         errCode: 0,
-                        data: data,
+                        data: data.rows,
+                        total: data.count,
+                        page: +validPage,
+                        limit: +validLimit
                     });
                 }
             }
@@ -302,4 +321,79 @@ let handleUpdateCV = (input) => {
     });
 };
 
-module.exports = { handleGetCV, handleCreateCV, handleGetDetailCV, handleUpdateCV };
+const handleGetCVByStudentAndCV = async (input) => {
+    try {
+
+        const result = checkValidate(input, ["studentID", "cvID"]);
+
+        if (result && result.isValid === true) {
+            return {
+                errCode: 2,
+                message: `${re.message}`
+            }
+        }
+
+        const data = await db.Cvs.findOne({
+            where: {
+                id: input.cvID,
+                userID: input.studentID
+            },
+            raw: false,
+            nest: true,
+            include: [
+                {
+                    model: db.Allcodes,
+                    as: "dataStatus",
+                    attributes: ["value_VI", "value_EN"]
+                },
+                {
+                    model: db.Allcodes,
+                    as: "dataDegree",
+                    attributes: ["value_VI", "value_EN"]
+                },
+                {
+                    model: db.Internship_Batches,
+                    as: "internshipBatch",
+                    include: [
+                        {
+                            model: db.Allcodes,
+                            as: "dataInternship",
+                            attributes: ["value_VI", "value_EN"]
+                        }
+                    ]
+                },
+                {
+                    model: db.Projects,
+                    as: "projects"
+                },
+                {
+                    model: db.Work_Experiences,
+                    as: "experiences",
+                },
+                {
+                    model: db.Skills,
+                    as: "skills"
+                }
+            ],
+        })
+        if (!data) {
+            return {
+                errCode: 3,
+                message: "Không tồn tại người dùng hoặc cv !",
+            };
+        }
+        return {
+            errCode: 0,
+            data: data,
+        };
+
+    } catch (error) {
+        console.error("Error: ", error);
+        return {
+            errCode: -1,
+            message: "Đã xảy ra lỗi trong quá trình gọi API.",
+        };
+    }
+};
+
+module.exports = { handleGetCV, handleCreateCV, handleGetDetailCV, handleUpdateCV, handleGetCVByStudentAndCV };

@@ -123,12 +123,11 @@ const handleUserLogin = async (email, password) => {
             { expiresIn: process.env.JWT_EXPIRES }
         );
         delete user.password;
-
         return {
             errCode: 0,
             message: "Đăng nhập thành công.",
             data: user,
-            token,
+            token
         };
 
     } catch (error) {
