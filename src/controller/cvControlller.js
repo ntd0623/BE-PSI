@@ -38,7 +38,13 @@ const createCV = async (req, res) => {
 // get detail Cv By Id User
 const getDetailCvByIdUser = async (req, res) => {
     try {
-        const cv = await cvService.handleGetDetailCV(req.query.id);
+        const { id, statusCv, page, limit } = req.query
+        const cv = await cvService.handleGetDetailCV({
+            id,
+            statusCv,
+            page,
+            limit
+        });
         return res.status(200).json(cv);
     } catch (e) {
         console.error("Error: ", e);
@@ -63,9 +69,18 @@ const updateStatusCV = async (req, res) => {
     }
 };
 
+const getCVByStudentIDAndCvID = async (req, res) => {
+    const data = await cvService.handleGetCVByStudentAndCV({
+        studentID: req.query.studentID,
+        cvID: req.query.cvID
+    });
+    return res.status(200).json(data);
+}
+
 module.exports = {
     getCV,
     createCV,
     getDetailCvByIdUser,
     updateStatusCV,
+    getCVByStudentIDAndCvID
 };

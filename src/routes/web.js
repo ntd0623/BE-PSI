@@ -2,6 +2,7 @@ const express = require("express");
 const cvController = require("../controller/cvControlller");
 const userController = require("../controller/userController");
 const authController = require("../controller/authController");
+const verifyToken = require("../middleware/verifyToken")
 const router = express.Router();
 
 const initWebRoutes = (app) => {
@@ -10,9 +11,9 @@ const initWebRoutes = (app) => {
     // CV
     router.get("/api/get-cv", cvController.getCV);
     router.post("/api/create-cv", cvController.createCV);
-    router.get("/api/get-cv-by-id", cvController.getDetailCvByIdUser);
+    router.get("/api/get-cv-by-id", verifyToken.verifyToken, verifyToken.verifyTokenAndStudent, cvController.getDetailCvByIdUser);
     router.put("/api/update-cv-by-userId", cvController.updateStatusCV);
-
+    router.get("/api/get-cv-by-studentID-and-idCv", verifyToken.verifyToken, verifyToken.verifyTokenAndStudent, cvController.getCVByStudentIDAndCvID)
 
     // Student
     router.get("/api/get-list-student", userController.getAllStudentByCV)
