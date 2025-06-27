@@ -22,9 +22,9 @@ const getCV = async (req, res) => {
 };
 
 // create cv
-const createCV = async (req, res) => {
+const upsertCV = async (req, res) => {
     try {
-        const data = await cvService.handleCreateCV(req.body);
+        const data = await cvService.handleUpsertCV(req.body);
         return res.status(200).json(data);
     } catch (e) {
         console.error("Error: ", e);
@@ -77,10 +77,26 @@ const getCVByStudentIDAndCvID = async (req, res) => {
     return res.status(200).json(data);
 }
 
+const deleteCv = async (req, res) => {
+    try {
+        const message = await cvService.handleDeleteCV(req.query.id);
+        return res.status(200).json(message)
+    } catch (error) {
+        console.log("Error: ", error);
+        return res.status(500).json({
+            errCode: 1,
+            message: "Error from server!",
+        });
+    }
+
+}
+
+
 module.exports = {
     getCV,
-    createCV,
+    upsertCV,
     getDetailCvByIdUser,
     updateStatusCV,
-    getCVByStudentIDAndCvID
+    getCVByStudentIDAndCvID,
+    deleteCv
 };
