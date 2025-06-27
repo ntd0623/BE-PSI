@@ -10,10 +10,11 @@ const initWebRoutes = (app) => {
     router.get("/api/get-allCode", userController.getAllCodes)
     // CV
     router.get("/api/get-cv", cvController.getCV);
-    router.post("/api/create-cv", cvController.createCV);
+    router.post("/api/upsert-cv", cvController.upsertCV);
     router.get("/api/get-cv-by-id", verifyToken.verifyToken, verifyToken.verifyTokenAndStudent, cvController.getDetailCvByIdUser);
     router.put("/api/update-cv-by-userId", cvController.updateStatusCV);
     router.get("/api/get-cv-by-studentID-and-idCv", verifyToken.verifyToken, verifyToken.verifyTokenAndStudent, cvController.getCVByStudentIDAndCvID)
+    router.delete("/api/delete-cv", verifyToken.verifyToken, verifyToken.verifyTokenAndStudent, cvController.deleteCv)
 
     // Student
     router.get("/api/get-list-student", userController.getAllStudentByCV)

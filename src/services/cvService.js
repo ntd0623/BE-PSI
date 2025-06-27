@@ -106,21 +106,24 @@ let checkValidate = (inputData, requiredFields) => {
     };
 };
 
-// handle create CV
-let handleCreateCV = (input) => {
+// handle upsert CV
+let handleUpsertCV = (input) => {
     return new Promise(async (resolve, reject) => {
         try {
             let { isValid, message } = checkValidate(input,
                 ["userID", "fullName", "email", "phoneNumber",
                     "birthDay", "genderID", "address", "school_name",
                     "major", "degreeID", "gpa", "graduationYear",
-                    "career_objective", "references", "skills"]);
+                    "career_objective", "references", "skills", "action"]);
             if (isValid) {
                 resolve({
                     errCode: 2,
                     message: message,
                 });
-            } else {
+            }
+
+            if (input.action === "ADD") {
+
                 let infoCv = await db.Cvs.create({
                     userID: input.userID,
                     fullName: input.fullName,
@@ -195,6 +198,88 @@ let handleCreateCV = (input) => {
                     message: "Create CV successfully",
                 });
             }
+            if (input.action === "EDIT") {
+                const existingCv = await db.Cvs.findOne({
+                    where: { id: input.cvID, userID: input.userID },
+                });
+
+                if (!existingCv) {
+                    return resolve({
+                        errCode: 1,
+                        message: "CV not found!",
+                    });
+                }
+
+                await existingCv.update({
+                    fullName: input.fullName,
+                    email: input.email,
+                    phoneNumber: input.phoneNumber,
+                    birthDay: input.birthDay,
+                    genderID: input.genderID,
+                    address: input.address,
+                    schoolName: input.school_name,
+                    major: input.major,
+                    degreeID: input.degreeID,
+                    gpa: input.gpa,
+                    graduationYear: input.graduationYear,
+                    career_objective: input.career_objective,
+                    archivement: input.archivements,
+                    references: input.references,
+                    image: input.image,
+                    submission_date: new Date(),
+                });
+
+                const allSkills = [];
+                for (const type in input.skills) {
+                    input.skills[type].forEach(name => {
+                        allSkills.push({ name, type });
+                    });
+                }
+
+                const insertedSkills = [];
+                for (const skill of allSkills) {
+                    const [record] = await db.Skills.findOrCreate({
+                        where: { name: skill.name, type: skill.type },
+                        defaults: skill
+                    });
+                    insertedSkills.push(record);
+                }
+
+                await db.Cv_skill.destroy({ where: { cv_id: existingCv.id } });
+                await db.Cv_skill.bulkCreate(
+                    insertedSkills.map(skill => ({
+                        cv_id: existingCv.id,
+                        skill_id: skill.id
+                    }))
+                );
+
+                await db.Projects.destroy({ where: { cv_id: existingCv.id } });
+                const formattedProjects = input.projects.map(project => ({
+                    cv_id: existingCv.id,
+                    name: project.name?.trim(),
+                    technologies: project.technologies?.trim(),
+                    description: project.description?.trim(),
+                    link: project.link?.trim()
+                }));
+                await db.Projects.bulkCreate(formattedProjects);
+
+                await db.Work_Experiences.destroy({ where: { cv_id: existingCv.id } });
+                const formattedExperiences = input.experience.map(exp => ({
+                    cv_id: existingCv.id,
+                    position: exp.position?.trim(),
+                    company: exp.nameCompany?.trim(),
+                    description: exp.description?.trim(),
+                    start_date: exp.startDate?.trim(),
+                    end_date: exp.endDate?.trim()
+                }));
+                await db.Work_Experiences.bulkCreate(formattedExperiences);
+
+                resolve({
+                    errCode: 0,
+                    message: "Update CV successfully",
+                });
+            }
+
         } catch (e) {
             reject(e);
         }
@@ -266,6 +351,16 @@ let handleGetDetailCV = ({ id, statusCv = "", page, limit = 3 }) => {
                     ],
                 });
                 if (data) {
+
+                    if (data.rows && data.rows.length > 0) {
+                        data.rows.map((item, index) => {
+                            if (item.image) {
+                                item.image = Buffer.from(item.image, "base64").toString("binary");
+                            }
+                            return item;
+                        });
+                    }
+
                     resolve({
                         errCode: 0,
                         data: data.rows,
@@ -382,6 +477,11 @@ const handleGetCVByStudentAndCV = async (input) => {
                 message: "Không tồn tại người dùng hoặc cv !",
             };
         }
+
+        if (data && data.image) {
+            data.image = Buffer.from(data.image, "base64").toString("binary");
+        }
+
         return {
             errCode: 0,
             data: data,
@@ -396,4 +496,35 @@ const handleGetCVByStudentAndCV = async (input) => {
     }
 };
 
-module.exports = { handleGetCV, handleCreateCV, handleGetDetailCV, handleUpdateCV, handleGetCVByStudentAndCV };
+const handleDeleteCV = async (id) => {
+    try {
+        if (!id) {
+            return {
+                errCode: 2,
+                message: "Missing input id !"
+            }
+        }
+        await db.Cv_skill.destroy({ where: { cv_id: id } });
+
+        await db.Projects.destroy({ where: { cv_id: id } });
+
+        await db.Work_Experiences.destroy({ where: { cv_id: id } });
+
+        await db.Cvs.destroy({
+            where: { id: id }
+        })
+        return {
+            errCode: 0,
+            message: "Delete CV successfully !"
+        }
+
+    } catch (error) {
+        console.error("Error: ", error);
+        return {
+            errCode: -1,
+            message: "Đã xảy ra lỗi trong quá trình gọi API.",
+        };
+    }
+}
+
+module.exports = { handleGetCV, handleUpsertCV, handleGetDetailCV, handleUpdateCV, handleGetCVByStudentAndCV, handleDeleteCV };
