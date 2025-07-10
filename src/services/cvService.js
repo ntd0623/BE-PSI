@@ -1,6 +1,4 @@
-const { where } = require("sequelize");
 const db = require("../models/index.js");
-const projects = require("../models/projects.js");
 const emailService = require("./emailService.js")
 // handle get CV submitted
 let handleGetCV = ({ statusCv = "", batchID = "", page, limit = 3 }) => {
@@ -306,7 +304,7 @@ let handleGetDetailCV = ({ id, statusCv = "", page, limit = 3 }) => {
                 const validPage = isNaN(+page) || +page < 1 ? 1 : +page;
                 const validLimit = isNaN(+limit) || +limit < 1 ? 3 : +limit;
                 const offset = (validPage - 1) * validLimit;
-
+                console.log("Check page: ", validPage)
                 let data = await db.Cvs.findAndCountAll({
                     where: whereCvs,
                     limit: validLimit,
@@ -314,6 +312,7 @@ let handleGetDetailCV = ({ id, statusCv = "", page, limit = 3 }) => {
                     raw: false,
                     nest: true,
                     distinct: true,
+                    order: [["createdAt", "DESC"]],
                     include: [
                         {
                             model: db.Allcodes,

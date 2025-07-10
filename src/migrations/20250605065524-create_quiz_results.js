@@ -16,24 +16,38 @@ module.exports = {
         type: Sequelize.INTEGER,
       },
       total_score: {
-        type: Sequelize.DECIMAL(3, 2),
+        type: Sequelize.DECIMAL(4, 2),
       },
       passed: {
         type: Sequelize.BOOLEAN,
       },
       submitted_at: {
-        type: Sequelize.DATEONLY,
+        type: Sequelize.DATE,
+      },
+      total_correct: {
+        type: Sequelize.INTEGER,
+        field: 'total_correct',
+        allowNull: true,
+      },
+      total_question: {
+        type: Sequelize.INTEGER,
+      },
+      duration_used: {
+        type: Sequelize.INTEGER,
       },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATEONLY,
         defaultValue: Sequelize.NOW
       },
-      updatedAT: {
+      updatedAt: {
         allowNull: false,
         type: Sequelize.DATEONLY,
         defaultValue: Sequelize.NOW
       },
+    }, {
+      charset: 'utf8mb4',
+      collate: 'utf8mb4_unicode_ci',
     });
   },
   async down(queryInterface, Sequelize) {

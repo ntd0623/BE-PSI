@@ -303,7 +303,7 @@ module.exports = {
       {
         key: 'D1',
         type: 'DEGREE',
-        value_VI: 'Bằng Đại Học',
+        value_VI: 'Đại Học',
         value_EN: `Bachelor's Degree`,
         createdAt: new Date(),
         updatedAt: new Date(),
@@ -311,7 +311,7 @@ module.exports = {
       {
         key: 'D2',
         type: 'DEGREE',
-        value_VI: 'Bằng Cao Đẳng',
+        value_VI: 'Cao Đẳng',
         value_EN: `Associate degree`,
         createdAt: new Date(),
         updatedAt: new Date(),
@@ -319,7 +319,7 @@ module.exports = {
       {
         key: 'D3',
         type: 'DEGREE',
-        value_VI: 'Bằng Thạc Sĩ',
+        value_VI: 'Thạc Sĩ',
         value_EN: `Master's degree`,
         createdAt: new Date(),
         updatedAt: new Date(),
@@ -327,7 +327,7 @@ module.exports = {
       {
         key: 'D4',
         type: 'DEGREE',
-        value_VI: 'Bằng Tiến Sĩ',
+        value_VI: 'Tiến Sĩ',
         value_EN: `Doctorate`,
         createdAt: new Date(),
         updatedAt: new Date(),
@@ -335,7 +335,7 @@ module.exports = {
       {
         key: 'D5',
         type: 'DEGREE',
-        value_VI: 'Bằng Kỹ Sư',
+        value_VI: 'Kỹ Sư',
         value_EN: `Engineering degree`,
         createdAt: new Date(),
         updatedAt: new Date(),

@@ -32,9 +32,27 @@ const htmlBody = (dataSend) => {
     `;
   } else if (statusCv === "CV3") {
     messageBody = `
-      <p>Dear ${fullName},</p>
-      <p>We are pleased to inform you that you have been <strong>accepted</strong> for the internship position at our company.</p>
-      <p>Our HR team will reach out to you shortly with more information about the onboarding process. We are excited to have you onboard!</p>
+<p>Dear ${fullName},</p>
+
+<p>Congratulations! You have successfully passed the CV screening round for our internship position.</p>
+
+<p>As the next step in our recruitment process, we would like to invite you to complete an online <strong>assessment quiz</strong> to evaluate your technical skills and problem-solving abilities.</p>
+
+<p>
+  Please click the button below to begin the quiz. Kindly complete the test before the deadline provided.
+</p>
+
+<p style="margin: 20px 0;">
+  <a href="${process.env.URL_REACT}/student/quiz-evaluation" style="background-color: #2563eb; color: white; padding: 10px 20px; text-decoration: none; border-radius: 6px;">
+    Start Quiz
+  </a>
+</p>
+
+<p>Should you have any questions, feel free to contact our team at thanhdo062305@gmail.com.</p>
+
+<p>Best regards,</p>
+<p><strong>The Recruitment Team</strong></p>
+
     `;
   } else if (statusCv === "CV4") {
     messageBody = `
@@ -67,7 +85,7 @@ const htmlBody = (dataSend) => {
   <hr style="margin: 30px 0; border: none; border-top: 1px solid #ccc;" />
 
   <div style="font-size: 13px; color: #555;">
-    <strong>PLT PSI</strong><br>
+    <strong>PLT - SOLUTION</strong><br>
     📞 <a href="tel:0974660075" style="color: #008080; text-decoration: none;">0974 660 075</a><br>
     🌐 <a href="https://psi.plt.pro.vn" style="color: #008080;" target="_blank">https://psi.plt.pro.vn</a><br>
     📍 Vĩnh Phú 41, Quốc Lộ 13, Thuận An, Bình Dương
@@ -75,7 +93,6 @@ const htmlBody = (dataSend) => {
 </div>
   `;
 };
-
 
 module.exports = {
   sendEmail,

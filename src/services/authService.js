@@ -24,9 +24,22 @@ const authService = {
             });
         }
 
+        // Create JWT token
+        const jwtToken = jwt.sign(
+            {
+                id: user.id,
+                email: user.email,
+                roleID: user.roleID,
+            },
+            process.env.JWT_SECRET,
+            { expiresIn: process.env.JWT_EXPIRES }
+        );
+
         return {
             errCode: 0,
-            data: user
+            message: "Login with Google scuccessfully",
+            data: user,
+            token: jwtToken
         };
     },
 
@@ -51,7 +64,8 @@ const authService = {
             });
         }
 
-        const token = jwt.sign(
+        // Create JWT token
+        const jwtToken = jwt.sign(
             {
                 id: user.id,
                 email: user.email,
@@ -63,7 +77,7 @@ const authService = {
 
         return {
             errCode: 0,
-            message: "Login with facebook scuccessfully",
+            message: "Login with Facebook scuccessfully",
             data: {
                 id: user.id,
                 name: user.name,
@@ -72,7 +86,7 @@ const authService = {
                 avatar: user.avatar,
             },
 
-            token,
+            token: jwtToken,
         };
     },
 };

@@ -5,6 +5,12 @@ module.exports = (sequelize, DataTypes) => {
   class Quizzes_Answers extends Model {
     static associate(models) {
       // define association here if needed
+      Quizzes_Answers.belongsTo(models.Quizzes_Questions, {
+        as: "question",
+        foreignKey: "questionID",
+        onDelete: "CASCADE",
+        hooks: true,
+      });
     }
   }
   Quizzes_Answers.init(

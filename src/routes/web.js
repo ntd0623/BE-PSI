@@ -2,7 +2,9 @@ const express = require("express");
 const cvController = require("../controller/cvControlller");
 const userController = require("../controller/userController");
 const authController = require("../controller/authController");
-const verifyToken = require("../middleware/verifyToken")
+const quizController = require("../controller/quizController");
+const verifyToken = require("../middleware/verifyToken");
+const checkPassCVIfStudent = require("../middleware/checkPassedCV");
 const router = express.Router();
 
 const initWebRoutes = (app) => {
@@ -32,8 +34,19 @@ const initWebRoutes = (app) => {
     // Login with Facebook
     router.post("/api/auth/facebook", authController.facebookAuth);
     // Register
-    router.post("/api/register", userController.register)
+    router.post("/api/register", userController.register);
+
+    // Quiz
+    router.get("/api/get-quiz-set", verifyToken.verifyToken, checkPassCVIfStudent, quizController.getQuizSets)
+    router.get("/api/get-quiz-set-by-id", verifyToken.verifyToken, verifyToken.verifyTokenAndAdmin, quizController.getQuizSetByID)
+    router.post("/api/upsert-quiz-set", verifyToken.verifyToken, verifyToken.verifyTokenAndAdmin, quizController.upsertQuizSet)
+    router.delete("/api/delete-quiz-set", verifyToken.verifyToken, verifyToken.verifyTokenAndAdmin, quizController.deleteQuizSet)
+    // Question
+    router.get("/api/get-question-by-quizID", verifyToken.verifyToken, checkPassCVIfStudent, quizController.getQuestionByQuizID);
+    router.post("/api/quiz-submissions", verifyToken.verifyToken, verifyToken.verifyTokenAndStudent, quizController.quizSubmissions);
+    // Quiz-Result
+    router.get("/api/get-quiz-result", verifyToken.verifyToken, verifyToken.verifyTokenAndAdmin, quizController.getQuizResult)
+
     return app.use("/", router);
 };
-
 module.exports = initWebRoutes;

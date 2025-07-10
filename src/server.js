@@ -1,52 +1,42 @@
-import express from "express";
-import bodyParser from "body-parser";
-import viewEngine from "./config/viewEngine.js";
-import initWebRoutes from "./routes/web.js";
-import connectDB from "./config/connectDBNode.js";
-import cors from "cors";
-import dotenv from "dotenv";
+const express = require("express");
+const bodyParser = require("body-parser");
+const viewEngine = require("./config/viewEngine.js");
+const initWebRoutes = require("./routes/web.js");
+const connectDB = require("./config/connectDBNode.js");
+const cors = require("cors");
+const dotenv = require("dotenv");
+
 dotenv.config();
-let app = express();
 
-// app.use(cors({ credentials: true, origin: true }));
-//config app
+const app = express();
 
-app.use(function (req, res, next) {
-    // Website you wish to allow to connect
-    res.setHeader("Access-Control-Allow-Origin", process.env.URL_REACT);
+// ✅ CORS middleware CHUẨN
+app.use(cors({
+    origin: process.env.URL_REACT || "https://psi.plt.pro.vn",
+    credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"],
+    allowedHeaders: ["Content-Type", "Authorization", "Accept"]
+}));
 
-    // Request methods you wish to allow
-    res.setHeader(
-        "Access-Control-Allow-Methods",
-        "GET, POST, OPTIONS, PUT, PATCH, DELETE"
-    );
-
-    // Request headers you wish to allow
-    res.setHeader(
-        "Access-Control-Allow-Headers",
-        "X-Requested-With,content-type,Authorization,Accept"
-    );
-
-    // Set to true if you need the website to include cookies in the requests sent
-    // to the API (e.g. in case you use sessions)
-    res.setHeader("Access-Control-Allow-Credentials", true);
-
-    // Pass to next layer of middleware
-    next();
-});
+// ✅ Content-Type global
 app.use((req, res, next) => {
-    res.setHeader('Content-Type', 'application/json; charset=utf-8');
+    res.setHeader("Content-Type", "application/json; charset=utf-8");
     next();
 });
+
+// ✅ Body parser
 app.use(bodyParser.json({ limit: "50mb" }));
 app.use(bodyParser.urlencoded({ limit: "50mb", extended: true }));
 
+// ✅ View & routes
 viewEngine(app);
 initWebRoutes(app);
 
+// ✅ Connect DB
 connectDB();
 
-let port = process.env.PORT || 8080;
+// ✅ Run server
+const port = process.env.PORT || 8080;
 app.listen(port, () => {
-    console.log(`🚀 Server is listening on port ${port}`);;
+    console.log(`🚀 Server is listening on port ${port}`);
 });

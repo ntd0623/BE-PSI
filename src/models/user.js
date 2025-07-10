@@ -5,6 +5,10 @@ module.exports = (sequelize, DataTypes) => {
     class Users extends Model {
         static associate(models) {
             Users.hasOne(models.Cvs, { foreignKey: 'userID' });
+            Users.hasMany(models.Quizzes_Results, {
+                foreignKey: 'userID',
+                as: 'quizResults',
+            });
         }
     }
     Users.init(

@@ -32,12 +32,15 @@ module.exports = {
         type: Sequelize.DATEONLY,
         defaultValue: Sequelize.NOW
       },
-      updatedAT: {
+      updatedAt: {
         allowNull: false,
         type: Sequelize.DATEONLY,
         defaultValue: Sequelize.NOW
 
       },
+    }, {
+      charset: 'utf8mb4',
+      collate: 'utf8mb4_unicode_ci',
     });
   },
   async down(queryInterface, Sequelize) {
