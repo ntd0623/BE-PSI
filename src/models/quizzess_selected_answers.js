@@ -5,10 +5,6 @@ module.exports = (sequelize, DataTypes) => {
   class Quizzes_Selected_Answers extends Model {
     static associate(models) {
       // Define associations here nếu có
-      Quizzes_Selected_Answers.belongsTo(models.Quizzes_Results, {
-        as: "result",
-        foreignKey: "quiz_result_id",
-      });
       Quizzes_Selected_Answers.belongsTo(models.Quizzes_Answers, {
         as: "answer",
         foreignKey: "answer_id",
@@ -17,15 +13,20 @@ module.exports = (sequelize, DataTypes) => {
         as: "question",
         foreignKey: "question_id",
       });
+      Quizzes_Selected_Answers.belongsTo(models.Quiz_Attempt, {
+        as: "attempt",
+        foreignKey: "attempt_id",
+      });
 
     }
   }
   Quizzes_Selected_Answers.init(
     {
-      quiz_result_id: DataTypes.INTEGER,
       answer_id: DataTypes.INTEGER,
       question_id: DataTypes.INTEGER,
-      isCorrect: DataTypes.BOOLEAN,
+      attempt_id: DataTypes.INTEGER,
+      correct_answer: DataTypes.INTEGER,
+      is_correct: DataTypes.BOOLEAN,
     },
     {
       sequelize,

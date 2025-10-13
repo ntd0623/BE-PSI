@@ -11,6 +11,11 @@ module.exports = {
       },
       cv_id: {
         type: Sequelize.INTEGER,
+        references: {
+          model: 'cvs',
+          key: 'id',
+        },
+        onDelete: 'CASCADE',
       },
       name: {
         type: Sequelize.STRING,

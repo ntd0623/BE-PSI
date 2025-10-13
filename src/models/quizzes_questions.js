@@ -7,16 +7,35 @@ module.exports = (sequelize, DataTypes) => {
       // Relationship
       Quizzes_Questions.belongsTo(models.Quizzes, {
         as: "quiz",
-        foreignKey: "quizID",
+        foreignKey: "quiz_id",
         onDelete: "CASCADE",
         hooks: true,
       });
 
       Quizzes_Questions.hasMany(models.Quizzes_Answers, {
         as: "answers",
-        foreignKey: "questionID",
+        foreignKey: "question_id",
         onDelete: "CASCADE",
         hooks: true,
+      });
+      Quizzes_Questions.hasMany(models.Quizzes_Question_Images, {
+        foreignKey: 'question_id',
+        as: 'images_question',
+        onDelete: 'CASCADE',
+      });
+
+      Quizzes_Questions.belongsTo(models.Allcodes,
+        {
+          foreignKey: 'type',
+          targetKey: "key",
+          as: "type_question",
+          onDelete: 'CASCADE',
+        }
+
+      )
+      Quizzes_Questions.hasMany(models.Quiz_Question_Attempt, {
+        as: "questionAttempts",
+        foreignKey: "question_id",
       });
 
     }
@@ -24,9 +43,10 @@ module.exports = (sequelize, DataTypes) => {
 
   Quizzes_Questions.init(
     {
-      quizID: DataTypes.INTEGER,
+      quiz_id: DataTypes.INTEGER,
       content: DataTypes.TEXT('long'),
       explanation: DataTypes.TEXT('long'),
+      type: DataTypes.STRING,
     },
     {
       sequelize,

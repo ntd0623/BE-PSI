@@ -1,42 +1,52 @@
-"use strict";
+'use strict';
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable("quizzes_selected_answers", {
+    await queryInterface.createTable('quiz_question_attempt', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER,
-      },
-      quiz_result_id: {
-        type: Sequelize.INTEGER,
-      },
-      answer_id: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.INTEGER
       },
       question_id: {
         type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'quizzes_questions',
+          key: 'id',
+        },
+        onDelete: 'CASCADE',
       },
-      isCorrect: {
-        type: Sequelize.BOOLEAN,
+      attempt_id: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'quiz_attempt',
+          key: 'id',
+        },
+        onDelete: 'CASCADE',
+      },
+      order_index: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATEONLY,
+        type: Sequelize.DATE,
         defaultValue: Sequelize.NOW
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATEONLY,
+        type: Sequelize.DATE,
         defaultValue: Sequelize.NOW
-      },
+      }
     }, {
       charset: 'utf8mb4',
       collate: 'utf8mb4_unicode_ci',
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable("quizzes_selected_answers");
-  },
+    await queryInterface.dropTable('quiz_question_attempt');
+  }
 };

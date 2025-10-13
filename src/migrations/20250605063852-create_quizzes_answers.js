@@ -9,7 +9,7 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      questionID: {
+      question_id: {
         type: Sequelize.INTEGER,
         references: {
           model: 'quizzes_questions',
@@ -20,7 +20,7 @@ module.exports = {
       content: {
         type: Sequelize.TEXT("long"),
       },
-      isCorrect: {
+      is_correct: {
         type: Sequelize.BOOLEAN,
       },
       createdAt: {

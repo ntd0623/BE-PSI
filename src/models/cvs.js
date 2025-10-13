@@ -5,18 +5,18 @@ module.exports = (sequelize, DataTypes) => {
     class Cvs extends Model {
         static associate(models) {
             Cvs.belongsTo(models.Users, {
-                foreignKey: 'userID'
+                foreignKey: 'user_id'
             });
             Cvs.belongsTo(models.Allcodes,
                 {
-                    foreignKey: 'degreeID',
+                    foreignKey: 'degree_id',
                     targetKey: "key",
                     as: "dataDegree"
                 }
             )
             Cvs.belongsTo(models.Allcodes,
                 {
-                    foreignKey: 'statusCv',
+                    foreignKey: 'status_cv',
                     targetKey: "key",
                     as: "dataStatus"
                 }
@@ -30,33 +30,33 @@ module.exports = (sequelize, DataTypes) => {
             });
             Cvs.hasMany(models.Projects, { foreignKey: 'cv_id', as: "projects" });
             Cvs.belongsTo(models.Internship_Batches, {
-                foreignKey: 'batchID',
+                foreignKey: 'batch_id',
                 as: 'internshipBatch'
             });
         }
     }
     Cvs.init(
         {
-            userID: DataTypes.INTEGER,
-            fullName: DataTypes.STRING,
+            user_id: DataTypes.INTEGER,
+            full_name: DataTypes.STRING,
             email: DataTypes.STRING,
-            phoneNumber: DataTypes.STRING,
-            birthDay: DataTypes.DATEONLY,
-            genderID: DataTypes.STRING,
+            phone_number: DataTypes.STRING,
+            birth_day: DataTypes.DATEONLY,
+            gender_id: DataTypes.STRING,
             address: DataTypes.STRING,
-            schoolName: DataTypes.STRING,
+            school_name: DataTypes.STRING,
             major: DataTypes.STRING,
-            degreeID: DataTypes.STRING,
+            degree_id: DataTypes.STRING,
             gpa: DataTypes.DECIMAL(3, 2),
-            graduationYear: DataTypes.INTEGER,
-            statusCv: DataTypes.STRING,
+            graduation_year: DataTypes.INTEGER,
+            status_cv: DataTypes.STRING,
             submission_date: DataTypes.DATEONLY,
             feedback: DataTypes.TEXT('long'),
             image: DataTypes.BLOB('long'),
             career_objective: DataTypes.STRING,
             archivement: DataTypes.STRING,
             references: DataTypes.STRING,
-            batchID: DataTypes.INTEGER,
+            batch_id: DataTypes.INTEGER,
         },
         {
             sequelize,

@@ -5,7 +5,7 @@ const initWebRoutes = require("./routes/web.js");
 const connectDB = require("./config/connectDBNode.js");
 const cors = require("cors");
 const dotenv = require("dotenv");
-
+const cookieParser = require("cookie-parser");
 dotenv.config();
 
 const app = express();
@@ -17,7 +17,7 @@ app.use(cors({
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"],
     allowedHeaders: ["Content-Type", "Authorization", "Accept"]
 }));
-
+app.use(cookieParser());
 // ✅ Content-Type global
 app.use((req, res, next) => {
     res.setHeader("Content-Type", "application/json; charset=utf-8");

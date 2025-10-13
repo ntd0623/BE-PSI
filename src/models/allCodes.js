@@ -7,7 +7,7 @@ module.exports = (sequelize, DataTypes) => {
             // define association here if needed
             Allcodes.hasMany(models.Cvs,
                 {
-                    foreignKey: 'statusCv',
+                    foreignKey: 'status_cv',
                     sourceKey: "key",
                     as: "dataStatus"
                 }
@@ -15,7 +15,7 @@ module.exports = (sequelize, DataTypes) => {
             )
             Allcodes.hasMany(models.Cvs,
                 {
-                    foreignKey: 'degreeID',
+                    foreignKey: 'degree_id',
                     sourceKey: "key",
                     as: "dataDegree"
                 }
@@ -29,14 +29,30 @@ module.exports = (sequelize, DataTypes) => {
                 }
 
             )
+            Allcodes.hasMany(models.Quizzes_Questions,
+                {
+                    foreignKey: 'type',
+                    sourceKey: "key",
+                    as: "type_question"
+                }
+
+            )
+            Allcodes.hasMany(models.Quiz_Attempt,
+                {
+                    foreignKey: 'status',
+                    sourceKey: "key",
+                    as: "status_attempt"
+                }
+
+            )
         }
     }
     Allcodes.init(
         {
             key: DataTypes.STRING,
             type: DataTypes.STRING,
-            value_EN: DataTypes.STRING,
-            value_VI: DataTypes.STRING,
+            value_en: DataTypes.STRING,
+            value_vi: DataTypes.STRING,
         },
         {
             sequelize,

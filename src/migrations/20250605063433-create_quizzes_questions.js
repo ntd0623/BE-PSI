@@ -9,7 +9,7 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      quizID: {
+      quiz_id: {
         type: Sequelize.INTEGER,
         references: {
           model: 'quizzes',
@@ -22,6 +22,14 @@ module.exports = {
       },
       explanation: {
         type: Sequelize.TEXT("long"),
+      },
+      type: {
+        type: Sequelize.STRING,
+        references: {
+          model: 'allcodes',
+          key: 'key',
+        },
+        onDelete: 'CASCADE',
       },
       createdAt: {
         allowNull: false,

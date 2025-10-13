@@ -10,13 +10,12 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      evaluationID: {
+      evaluation_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
       },
       criterion_name: {
         type: Sequelize.STRING,
-
       },
       score: {
         type: Sequelize.DECIMAL(3, 2),

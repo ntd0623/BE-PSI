@@ -9,8 +9,8 @@ module.exports = (sequelize, DataTypes) => {
     }
     Assigned_Tasks.init(
         {
-            taskID: DataTypes.INTEGER,
-            userID: DataTypes.INTEGER,
+            task_id: DataTypes.INTEGER,
+            user_id: DataTypes.INTEGER,
             status_assigned: DataTypes.STRING,
             progress_percent: DataTypes.INTEGER,
         },

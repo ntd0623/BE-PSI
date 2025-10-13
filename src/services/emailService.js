@@ -20,19 +20,19 @@ let sendEmail = async (dataSend) => {
 };
 
 const htmlBody = (dataSend) => {
-  const { fullName, statusCv } = dataSend;
+  const { full_name, status_cv } = dataSend;
 
   let messageBody = "";
 
-  if (statusCv === "CV2") {
+  if (status_cv === "CV2") {
     messageBody = `
-      <p>Dear ${fullName},</p>
+      <p>Dear ${full_name},</p>
       <p>We wanted to let you know that we have <strong>reviewed your CV</strong> for the internship position. Our team is currently evaluating all applications and you will receive a follow-up email regarding the next step.</p>
       <p>We appreciate your patience and thank you for applying.</p>
     `;
-  } else if (statusCv === "CV3") {
+  } else if (status_cv === "CV3") {
     messageBody = `
-<p>Dear ${fullName},</p>
+<p>Dear ${full_name},</p>
 
 <p>Congratulations! You have successfully passed the CV screening round for our internship position.</p>
 
@@ -54,9 +54,9 @@ const htmlBody = (dataSend) => {
 <p><strong>The Recruitment Team</strong></p>
 
     `;
-  } else if (statusCv === "CV4") {
+  } else if (status_cv === "CV4") {
     messageBody = `
-      <p>Dear ${fullName},</p>
+      <p>Dear ${full_name},</p>
       <p>Thank you for your interest in our internship program. We truly appreciate the time and effort you invested in your application.</p>
       <p>Unfortunately, we regret to inform you that we have decided to move forward with other applicants for this position.</p>
       <p>We will keep your information in our talent pool and contact you should other opportunities arise that better match your skills and experience.</p>

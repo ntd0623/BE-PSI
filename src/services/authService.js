@@ -20,7 +20,7 @@ const authService = {
                 name: payload.name,
                 avatar: payload.picture,
                 provider: "Google",
-                roleID: "R2"
+                role_id: "R2"
             });
         }
 
@@ -29,7 +29,7 @@ const authService = {
             {
                 id: user.id,
                 email: user.email,
-                roleID: user.roleID,
+                role_id: user.role_id,
             },
             process.env.JWT_SECRET,
             { expiresIn: process.env.JWT_EXPIRES }
@@ -59,7 +59,7 @@ const authService = {
                 email,
                 name,
                 provider: "Facebook",
-                roleID: "R2",
+                role_id: "R2",
                 avatar: picture?.data?.url || null,
             });
         }
@@ -69,7 +69,7 @@ const authService = {
             {
                 id: user.id,
                 email: user.email,
-                roleID: user.roleID,
+                role_id: user.role_id,
             },
             process.env.JWT_SECRET,
             { expiresIn: process.env.JWT_EXPIRES }
@@ -82,7 +82,7 @@ const authService = {
                 id: user.id,
                 name: user.name,
                 email: user.email,
-                roleID: user.roleID,
+                role_id: user.role_id,
                 avatar: user.avatar,
             },
 

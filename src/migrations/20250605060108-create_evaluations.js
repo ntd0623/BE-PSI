@@ -10,7 +10,7 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      userID: {
+      user_id: {
         type: Sequelize.INTEGER,
       },
       evaluator_name: {
@@ -19,10 +19,10 @@ module.exports = {
       company_name: {
         type: Sequelize.STRING,
       },
-      evaluation_DATEONLY: {
+      evaluation_date: {
         type: Sequelize.DATEONLY,
       },
-      evaluationType: { // ✅ sửa chính tả
+      evaluation_type: { // ✅ sửa chính tả
         type: Sequelize.STRING,
       },
       average_score: {

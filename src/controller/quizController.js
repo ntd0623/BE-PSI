@@ -3,8 +3,9 @@ const quizService = require("../services/quizService");
 const quizController = {
     getQuizSets: async (req, res) => {
         try {
-            const roleID = req.user.roleID;
-            const result = await quizService.handleGetQuizSets(roleID);
+            const role_id = req.user.role_id;
+            const sort = req.query.sort || null;
+            const result = await quizService.handleGetQuizSets(role_id, sort);
             return res.status(200).json(result);
         } catch (error) {
             console.error("Lỗi controller:", error);
@@ -32,7 +33,7 @@ const quizController = {
         }
     },
 
-    getQuestionByQuizID: async (req, res) => {
+    getQuestionByquiz_id: async (req, res) => {
         try {
             const { id, limit = 10, page = 1, role = "R1" } = req.query;
             const result = await quizService.handleGetQuestionByQuiz({ id, limit, page, role });
@@ -100,6 +101,20 @@ const quizController = {
             const result = await quizService.handleGetQuizResult();
             return res.status(200).json(result)
 
+        } catch (error) {
+            console.error("Lỗi controller:", error);
+            return res.status(500).json(
+                {
+                    errCode: 1,
+                    message: "Error form server !"
+                }
+            );
+        }
+    },
+    getQuiz: async (req, res) => {
+        try {
+            const result = await quizService.handleGetQuiz();
+            return res.status(200).json(result)
         } catch (error) {
             console.error("Lỗi controller:", error);
             return res.status(500).json(

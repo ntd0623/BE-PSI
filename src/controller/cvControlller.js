@@ -3,10 +3,10 @@ const cvService = require("../services/cvService.js");
 // get list cv
 const getCV = async (req, res) => {
     try {
-        let { statusCv, batchID, page, limit } = req.query;
+        let { status_cv, batch_id, page, limit } = req.query;
         const data = await cvService.handleGetCV({
-            statusCv,
-            batchID,
+            status_cv,
+            batch_id,
             page,
             limit,
         });
@@ -38,10 +38,10 @@ const upsertCV = async (req, res) => {
 // get detail Cv By Id User
 const getDetailCvByIdUser = async (req, res) => {
     try {
-        const { id, statusCv, page, limit } = req.query
+        const { id, status_cv, page, limit } = req.query
         const cv = await cvService.handleGetDetailCV({
             id,
-            statusCv,
+            status_cv,
             page,
             limit
         });
@@ -56,7 +56,7 @@ const getDetailCvByIdUser = async (req, res) => {
 };
 
 // update status CV
-const updateStatusCV = async (req, res) => {
+const updatestatus_cv = async (req, res) => {
     try {
         const data = await cvService.handleUpdateCV(req.body);
         return res.status(200).json(data);
@@ -96,7 +96,7 @@ module.exports = {
     getCV,
     upsertCV,
     getDetailCvByIdUser,
-    updateStatusCV,
+    updatestatus_cv,
     getCVByStudentIDAndCvID,
     deleteCv
 };

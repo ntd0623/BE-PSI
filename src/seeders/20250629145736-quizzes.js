@@ -9,7 +9,7 @@ module.exports = {
         image: null,
         description: 'Bộ câu hỏi kiểm tra kiến thức nền tảng về PHP.',
         duration_minutes: 60,
-        score: 10,
+        number_questions: 40,
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -18,7 +18,7 @@ module.exports = {
         image: null,
         description: 'Bộ câu hỏi kiểm tra kiến thức cơ sở dữ liệu như MySQL, PostgreSQL, SQL Server.',
         duration_minutes: 60,
-        score: 10,
+        number_questions: 10,
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -27,7 +27,7 @@ module.exports = {
         image: null,
         description: 'Bộ đề trắc nghiệm về quy trình kiểm thử, test case, bug, v.v.',
         duration_minutes: 60,
-        score: 10,
+        number_questions: 40,
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -36,7 +36,7 @@ module.exports = {
         image: null,
         description: 'Đánh giá kiến thức JavaScript từ ES5 đến ES6+, bao gồm closure, async/await, DOM, v.v.',
         duration_minutes: 60,
-        score: 10,
+        number_questions: 40,
 
         createdAt: new Date(),
         updatedAt: new Date()
@@ -46,7 +46,7 @@ module.exports = {
         image: null,
         description: 'Câu hỏi trắc nghiệm kiểm tra kiến thức dùng Git cơ bản và thao tác với GitHub.',
         duration_minutes: 60,
-        score: 10,
+        number_questions: 40,
 
         createdAt: new Date(),
         updatedAt: new Date()
@@ -56,7 +56,7 @@ module.exports = {
         image: null,
         description: 'Bộ câu hỏi về cấu trúc HTML5, thẻ semantic, Flexbox, Grid, CSS selector, v.v.',
         duration_minutes: 60,
-        score: 10,
+        number_questions: 40,
 
         createdAt: new Date(),
         updatedAt: new Date()

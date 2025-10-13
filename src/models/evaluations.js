@@ -9,7 +9,7 @@ module.exports = (sequelize, DataTypes) => {
   }
   Evaluations.init(
     {
-      userID: DataTypes.INTEGER,
+      user_id: DataTypes.INTEGER,
       evaluator_name: DataTypes.STRING,
       company_name: DataTypes.STRING,
       evaluation_date: DataTypes.DATEONLY,

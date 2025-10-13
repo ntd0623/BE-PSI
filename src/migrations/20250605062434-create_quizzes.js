@@ -21,7 +21,7 @@ module.exports = {
       duration_minutes: {
         type: Sequelize.INTEGER,
       },
-      score: {
+      number_questions: {
         type: Sequelize.INTEGER,
       },
       createdAt: {

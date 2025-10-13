@@ -7,7 +7,7 @@ module.exports = (sequelize, DataTypes) => {
       // relationship
       Quizzes.hasMany(models.Quizzes_Questions, {
         as: "questions",
-        foreignKey: "quizID",
+        foreignKey: "quiz_id",
         onDelete: "CASCADE",
         hooks: true,
       });
@@ -18,7 +18,17 @@ module.exports = (sequelize, DataTypes) => {
         onDelete: "CASCADE",
         hooks: true,
       });
+      Quizzes.hasMany(models.Quizzes_Schedules, {
+        as: "schedules",
+        foreignKey: "quiz_id",
+        onDelete: "CASCADE",
+        hooks: true,
+      });
 
+      Quizzes.hasMany(models.Quiz_Attempt, {
+        as: "attempts",
+        foreignKey: "quiz_id",
+      });
     }
   }
   Quizzes.init(
@@ -27,7 +37,7 @@ module.exports = (sequelize, DataTypes) => {
       image: DataTypes.BLOB('long'),
       description: DataTypes.TEXT('long'),
       duration_minutes: DataTypes.INTEGER,
-      score: DataTypes.INTEGER,
+      number_questions: DataTypes.INTEGER,
     },
     {
       sequelize,

@@ -2,7 +2,7 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable("cv_Skill", {
+    await queryInterface.createTable("cv_skill", {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -11,9 +11,19 @@ module.exports = {
       },
       cv_id: {
         type: Sequelize.INTEGER,
+        references: {
+          model: 'cvs',
+          key: 'id',
+        },
+        onDelete: 'CASCADE',
       },
       skill_id: {
         type: Sequelize.INTEGER,
+        references: {
+          model: 'skills',
+          key: 'id',
+        },
+        onDelete: 'CASCADE',
       },
       createdAt: {
         allowNull: false,
@@ -31,6 +41,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable("cv_Skill");
+    await queryInterface.dropTable("cv_skill");
   },
 };

@@ -10,7 +10,7 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      userID: {
+      user_id: {
         type: Sequelize.INTEGER,
       },
       title: {
@@ -19,10 +19,10 @@ module.exports = {
       description: {
         type: Sequelize.TEXT('long'),
       },
-      reportType: {
+      report_type: {
         type: Sequelize.STRING,
       },
-      reportStatus: {
+      report_status: {
         type: Sequelize.STRING,
       },
       progress_percent: {

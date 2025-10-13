@@ -12,14 +12,16 @@ module.exports = {
       },
       key: {
         type: Sequelize.STRING,
+        unique: true,
+        allowNull: false,
       },
       type: {
         type: Sequelize.STRING,
       },
-      value_EN: {
+      value_en: {
         type: Sequelize.STRING,
       },
-      value_VI: {
+      value_vi: {
         type: Sequelize.STRING,
       },
       createdAt: {

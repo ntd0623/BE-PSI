@@ -1,7 +1,7 @@
 const db = require("../models/index.js");
 const emailService = require("./emailService.js")
 // handle get CV submitted
-let handleGetCV = ({ statusCv = "", batchID = "", page, limit = 3 }) => {
+let handleGetCV = ({ status_cv = "", batch_id = "", page, limit = 3 }) => {
     return new Promise(async (resolve, reject) => {
         try {
             const validPage = isNaN(+page) || +page < 1 ? 1 : +page;
@@ -9,13 +9,13 @@ let handleGetCV = ({ statusCv = "", batchID = "", page, limit = 3 }) => {
             const offset = (validPage - 1) * validLimit;
 
             let whereCvs = {};
-            if (statusCv) {
-                whereCvs.statusCv = statusCv;
+            if (status_cv) {
+                whereCvs.status_cv = status_cv;
             }
 
             let whereBatch = {};
-            if (batchID) {
-                whereBatch.name = batchID;
+            if (batch_id) {
+                whereBatch.name = batch_id;
             }
 
             const result = await db.Cvs.findAndCountAll({
@@ -24,12 +24,12 @@ let handleGetCV = ({ statusCv = "", batchID = "", page, limit = 3 }) => {
                     {
                         model: db.Allcodes,
                         as: "dataDegree",
-                        attributes: ["value_VI", "value_EN"]
+                        attributes: ["value_vi", "value_en"]
                     },
                     {
                         model: db.Allcodes,
                         as: "dataStatus",
-                        attributes: ["value_VI", "value_EN"]
+                        attributes: ["value_vi", "value_en"]
                     },
                     {
                         model: db.Internship_Batches,
@@ -40,7 +40,7 @@ let handleGetCV = ({ statusCv = "", batchID = "", page, limit = 3 }) => {
                             {
                                 model: db.Allcodes,
                                 as: "dataInternship",
-                                attributes: ["value_VI", "value_EN"]
+                                attributes: ["value_vi", "value_en"]
                             }
                         ]
                     },
@@ -109,9 +109,9 @@ let handleUpsertCV = (input) => {
     return new Promise(async (resolve, reject) => {
         try {
             let { isValid, message } = checkValidate(input,
-                ["userID", "fullName", "email", "phoneNumber",
-                    "birthDay", "genderID", "address", "school_name",
-                    "major", "degreeID", "gpa", "graduationYear",
+                ["user_id", "full_name", "email", "phone_number",
+                    "birth_day", "gender_id", "address", "school_name",
+                    "major", "degree_id", "gpa", "graduation_year",
                     "career_objective", "references", "skills", "action"]);
             if (isValid) {
                 resolve({
@@ -123,23 +123,23 @@ let handleUpsertCV = (input) => {
             if (input.action === "ADD") {
 
                 let infoCv = await db.Cvs.create({
-                    userID: input.userID,
-                    fullName: input.fullName,
+                    user_id: input.user_id,
+                    full_name: input.full_name,
                     email: input.email,
-                    phoneNumber: input.phoneNumber,
-                    birthDay: input.birthDay,
-                    genderID: input.genderID,
+                    phone_number: input.phone_number,
+                    birth_day: input.birth_day,
+                    gender_id: input.gender_id,
                     address: input.address,
-                    schoolName: input.school_name,
+                    school_name: input.school_name,
                     major: input.major,
-                    degreeID: input.degreeID,
+                    degree_id: input.degree_id,
                     gpa: input.gpa,
-                    graduationYear: input.graduationYear,
+                    graduation_year: input.graduation_year,
                     career_objective: input.career_objective,
                     archivement: input.archivements,
                     references: input.references,
                     image: input.image,
-                    statusCv: "CV1",
+                    status_cv: "CV1",
                     submission_date: new Date()
 
                 });
@@ -175,6 +175,8 @@ let handleUpsertCV = (input) => {
                         name: project.name?.trim(),
                         technologies: project.technologies?.trim(),
                         description: project.description?.trim(),
+                        start_date: project.start_date?.trim(),
+                        end_date: project.end_date?.trim(),
                         link: project.link?.trim()
                     }));
                     await db.Projects.bulkCreate(formattedProjects)
@@ -198,7 +200,7 @@ let handleUpsertCV = (input) => {
             }
             if (input.action === "EDIT") {
                 const existingCv = await db.Cvs.findOne({
-                    where: { id: input.cvID, userID: input.userID },
+                    where: { id: input.cvID, user_id: input.user_id },
                 });
 
                 if (!existingCv) {
@@ -209,17 +211,17 @@ let handleUpsertCV = (input) => {
                 }
 
                 await existingCv.update({
-                    fullName: input.fullName,
+                    full_name: input.full_name,
                     email: input.email,
-                    phoneNumber: input.phoneNumber,
-                    birthDay: input.birthDay,
-                    genderID: input.genderID,
+                    phone_number: input.phone_number,
+                    birth_day: input.birth_day,
+                    gender_id: input.gender_id,
                     address: input.address,
-                    schoolName: input.school_name,
+                    school_name: input.school_name,
                     major: input.major,
-                    degreeID: input.degreeID,
+                    degree_id: input.degree_id,
                     gpa: input.gpa,
-                    graduationYear: input.graduationYear,
+                    graduation_year: input.graduation_year,
                     career_objective: input.career_objective,
                     archivement: input.archivements,
                     references: input.references,
@@ -256,6 +258,8 @@ let handleUpsertCV = (input) => {
                     cv_id: existingCv.id,
                     name: project.name?.trim(),
                     technologies: project.technologies?.trim(),
+                    start_date: project.start_date?.trim(),
+                    end_date: project.end_date?.trim(),
                     description: project.description?.trim(),
                     link: project.link?.trim()
                 }));
@@ -285,7 +289,7 @@ let handleUpsertCV = (input) => {
 };
 
 // handle get detail Cv
-let handleGetDetailCV = ({ id, statusCv = "", page, limit = 3 }) => {
+let handleGetDetailCV = ({ id, status_cv = "", page, limit = 3 }) => {
     return new Promise(async (resolve, reject) => {
         try {
             if (!id) {
@@ -295,10 +299,10 @@ let handleGetDetailCV = ({ id, statusCv = "", page, limit = 3 }) => {
                 });
             } else {
                 let whereCvs = {
-                    userID: id
+                    user_id: id
                 };
-                if (statusCv) {
-                    whereCvs.statusCv = statusCv;
+                if (status_cv) {
+                    whereCvs.status_cv = status_cv;
                 }
 
                 const validPage = isNaN(+page) || +page < 1 ? 1 : +page;
@@ -317,12 +321,12 @@ let handleGetDetailCV = ({ id, statusCv = "", page, limit = 3 }) => {
                         {
                             model: db.Allcodes,
                             as: "dataStatus",
-                            attributes: ["value_VI", "value_EN"]
+                            attributes: ["value_vi", "value_en"]
                         },
                         {
                             model: db.Allcodes,
                             as: "dataDegree",
-                            attributes: ["value_VI", "value_EN"]
+                            attributes: ["value_vi", "value_en"]
                         },
                         {
                             model: db.Internship_Batches,
@@ -331,7 +335,7 @@ let handleGetDetailCV = ({ id, statusCv = "", page, limit = 3 }) => {
                                 {
                                     model: db.Allcodes,
                                     as: "dataInternship",
-                                    attributes: ["value_VI", "value_EN"]
+                                    attributes: ["value_vi", "value_en"]
                                 }
                             ]
                         },
@@ -379,7 +383,7 @@ let handleGetDetailCV = ({ id, statusCv = "", page, limit = 3 }) => {
 let handleUpdateCV = (input) => {
     return new Promise(async (resolve, reject) => {
         try {
-            let { isValid, message } = checkValidate(input, ["id", "statusCv"]);
+            let { isValid, message } = checkValidate(input, ["id", "status_cv"]);
             if (isValid) {
                 resolve({
                     errCode: 2,
@@ -391,11 +395,11 @@ let handleUpdateCV = (input) => {
                 });
                 if (data) {
                     await data.update({
-                        statusCv: input.statusCv,
+                        status_cv: input.status_cv,
                     });
                     await emailService.sendEmail({
-                        fullName: data.fullName,
-                        statusCv: data.statusCv,
+                        full_name: data.full_name,
+                        status_cv: data.status_cv,
                         reciverEmail: data.email
                     });
                     resolve({
@@ -430,7 +434,7 @@ const handleGetCVByStudentAndCV = async (input) => {
         const data = await db.Cvs.findOne({
             where: {
                 id: input.cvID,
-                userID: input.studentID
+                user_id: input.studentID
             },
             raw: false,
             nest: true,
@@ -438,12 +442,12 @@ const handleGetCVByStudentAndCV = async (input) => {
                 {
                     model: db.Allcodes,
                     as: "dataStatus",
-                    attributes: ["value_VI", "value_EN"]
+                    attributes: ["value_vi", "value_en"]
                 },
                 {
                     model: db.Allcodes,
                     as: "dataDegree",
-                    attributes: ["value_VI", "value_EN"]
+                    attributes: ["value_vi", "value_en"]
                 },
                 {
                     model: db.Internship_Batches,
@@ -452,7 +456,7 @@ const handleGetCVByStudentAndCV = async (input) => {
                         {
                             model: db.Allcodes,
                             as: "dataInternship",
-                            attributes: ["value_VI", "value_EN"]
+                            attributes: ["value_vi", "value_en"]
                         }
                     ]
                 },

@@ -5,15 +5,18 @@ const client = new OAuth2Client(process.env.BACK_END_GG_CLIENT_ID);
 const googleVerify = {
 
     verifyGoogleToken: async (token) => {
-        const ticket = await client.verifyIdToken({
-            idToken: token,
-            audience: process.env.BACK_END_GG_CLIENT_ID,
-        });
-
-        const payload = ticket.getPayload();
-        // Return mail, name, avt
-        return payload;
+        try {
+            const ticket = await client.verifyIdToken({
+                idToken: token,
+                audience: process.env.BACK_END_GG_CLIENT_ID,
+            });
+            return ticket.getPayload();
+        } catch (error) {
+            console.error("Google token verification failed:", error);
+            return null;
+        }
     }
+
 }
 
 module.exports = googleVerify;

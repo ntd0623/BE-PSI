@@ -20,7 +20,7 @@ const verifyToken = (req, res, next) => {
 // verify role Admin
 const verifyTokenAndAdmin = (req, res, next) => {
     verifyToken(req, res, () => {
-        if (req.user?.roleID === "R1") {
+        if (req.user?.role_id === "R1") {
             next();
         } else {
             return res.status(403).json({ message: "Bạn không có quyền truy cập!" });
@@ -31,7 +31,7 @@ const verifyTokenAndAdmin = (req, res, next) => {
 // verify role Student
 const verifyTokenAndStudent = (req, res, next) => {
     verifyToken(req, res, () => {
-        if (req.user?.roleID === "R2") {
+        if (req.user?.role_id === "R2") {
             next();
         } else {
             return res.status(403).json({ message: "Chỉ dành cho sinh viên!" });

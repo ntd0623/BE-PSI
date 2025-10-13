@@ -9,11 +9,11 @@ module.exports = (sequelize, DataTypes) => {
     }
     Reports.init(
         {
-            userID: DataTypes.STRING,
+            user_id: DataTypes.STRING,
             title: DataTypes.STRING,
             description: DataTypes.TEXT('long'),
-            reportType: DataTypes.STRING,
-            reportStatus: DataTypes.STRING,
+            report_type: DataTypes.STRING,
+            report_status: DataTypes.STRING,
         },
         {
             sequelize,

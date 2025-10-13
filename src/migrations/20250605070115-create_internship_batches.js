@@ -11,6 +11,11 @@ module.exports = {
       },
       name: {
         type: Sequelize.STRING,
+        references: {
+          model: 'allcodes',
+          key: 'key',
+        },
+        onDelete: 'CASCADE',
       },
       start_date: {
         type: Sequelize.DATEONLY,

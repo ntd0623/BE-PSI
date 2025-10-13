@@ -4,11 +4,11 @@ const checkPassCVIfStudent = async (req, res, next) => {
         const user = req.user;
 
 
-        if (user.roleID === "R2") {
+        if (user.role_id === "R2") {
             const cv = await db.Cvs.findOne({
                 where: {
-                    userID: user.id,
-                    statusCv: "CV3",
+                    user_id: user.id,
+                    status_cv: "CV3",
                 },
             });
 

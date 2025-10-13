@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
     {
       title: DataTypes.STRING,
       description: DataTypes.TEXT('long'),
-      priorityID: DataTypes.STRING,
+      priority_id: DataTypes.STRING,
       deadline: DataTypes.DATEONLY,
     },
     {

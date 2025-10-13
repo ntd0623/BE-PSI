@@ -10,10 +10,10 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      taskID: {
+      task_id: {
         type: Sequelize.INTEGER,
       },
-      userID: {
+      user_id: {
         type: Sequelize.INTEGER,
       },
       status_assigned: {
@@ -28,7 +28,7 @@ module.exports = {
         type: Sequelize.DATEONLY,
         defaultValue: Sequelize.NOW
       },
-      updatedAt : {
+      updatedAt: {
         allowNull: false,
         type: Sequelize.DATEONLY,
         defaultValue: Sequelize.NOW

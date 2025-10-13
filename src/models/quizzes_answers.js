@@ -7,7 +7,7 @@ module.exports = (sequelize, DataTypes) => {
       // define association here if needed
       Quizzes_Answers.belongsTo(models.Quizzes_Questions, {
         as: "question",
-        foreignKey: "questionID",
+        foreignKey: "question_id",
         onDelete: "CASCADE",
         hooks: true,
       });
@@ -15,9 +15,9 @@ module.exports = (sequelize, DataTypes) => {
   }
   Quizzes_Answers.init(
     {
-      questionID: DataTypes.INTEGER,
+      question_id: DataTypes.INTEGER,
       content: DataTypes.TEXT('long'),
-      isCorrect: DataTypes.BOOLEAN,
+      is_correct: DataTypes.BOOLEAN,
     },
     {
       sequelize,

@@ -16,7 +16,7 @@ module.exports = {
       description: {
         type: Sequelize.TEXT('long'),
       },
-      priorityID: {
+      priority_id: {
         type: Sequelize.STRING,
       },
       deadline: {

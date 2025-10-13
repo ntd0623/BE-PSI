@@ -9,46 +9,56 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      userID: {
+      user_id: {
         type: Sequelize.INTEGER,
+        references: {
+          model: 'users',
+          key: 'id',
+        },
+        onDelete: 'CASCADE',
       },
-      fullName: {
+      full_name: {
         type: Sequelize.STRING,
       },
       email: {
         type: Sequelize.STRING,
       },
-      phoneNumber: {
+      phone_number: {
         type: Sequelize.STRING,
       },
-      birthDay: {
+      birth_day: {
         type: Sequelize.DATEONLY,
       },
-      genderID: {
+      gender_id: {
         type: Sequelize.STRING,
+        references: {
+          model: 'allcodes',
+          key: 'key',
+        },
+        onDelete: 'CASCADE',
       },
       address: {
         type: Sequelize.STRING,
       },
-      schoolName: {
+      school_name: {
         type: Sequelize.STRING,
       },
       major: {
         type: Sequelize.STRING,
       },
-      degreeID: {
+      degree_id: {
         type: Sequelize.STRING,
       },
       gpa: {
         type: Sequelize.DECIMAL(3, 2),
       },
-      graduationYear: {
+      graduation_year: {
         type: Sequelize.INTEGER,
       },
       image: {
         type: Sequelize.BLOB('long'),
       },
-      statusCv: {
+      status_cv: {
         type: Sequelize.STRING,
       },
       submission_date: {
@@ -67,7 +77,7 @@ module.exports = {
       references: {
         type: Sequelize.STRING,
       },
-      batchID: {
+      batch_id: {
         type: Sequelize.INTEGER,
       },
       createdAt: {

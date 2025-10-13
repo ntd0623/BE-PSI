@@ -6,7 +6,7 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // Định nghĩa quan hệ nếu cần
       Internship_Batches.hasMany(models.Cvs, {
-        foreignKey: 'batchID',
+        foreignKey: 'batch_id',
         as: 'cvs'
       });
       Internship_Batches.belongsTo(models.Allcodes,

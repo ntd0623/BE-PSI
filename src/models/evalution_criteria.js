@@ -9,7 +9,7 @@ module.exports = (sequelize, DataTypes) => {
     }
     Evaluations_Criteria.init(
         {
-            evaluationID: DataTypes.INTEGER,
+            evaluation_id: DataTypes.INTEGER,
             criterion_name: DataTypes.STRING,
             score: DataTypes.DECIMAL(3, 2),
         },

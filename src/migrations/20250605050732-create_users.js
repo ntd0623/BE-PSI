@@ -17,8 +17,13 @@ module.exports = {
         type: Sequelize.STRING,
       },
 
-      roleID: {
+      role_id: {
         type: Sequelize.STRING,
+        references: {
+          model: 'allcodes',
+          key: 'key',
+        },
+        onDelete: 'CASCADE',
       },
       name: {
         type: Sequelize.STRING,
